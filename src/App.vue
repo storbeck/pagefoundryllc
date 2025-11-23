@@ -302,7 +302,7 @@
       <section class="latest-works" id="works">
         <div class="section-header">
           <div>
-            <h2>Recent Frontend Work</h2>
+            <h2>Recent Work</h2>
           </div>
         </div>
         <div class="works-swiper">
@@ -345,7 +345,7 @@
       <section class="testimonials" id="notes">
         <div class="section-header">
           <div>
-            <h2>People talk about us</h2>
+            <h2>What people say</h2>
           </div>
           <div class="dots">
             <span class="active"></span><span></span><span></span>
@@ -412,8 +412,7 @@ const navLinks = [
   { id: 'about', label: 'About' },
   { id: 'services', label: 'Services' },
   { id: 'experience', label: 'Experience' },
-  { id: 'works', label: 'Works' },
-  { id: 'notes', label: 'Notes' }
+  { id: 'works', label: 'Works' }
 ];
 
 const activeSection = ref('about');

@@ -59,6 +59,7 @@ a:hover {
 .top-nav {
   display: grid;
   grid-template-columns: auto 1fr auto;
+  grid-template-areas: 'brand menu nav-actions';
   align-items: center;
   padding: 20px 32px 14px;
   border-bottom: 1px solid #f1eee7;
@@ -72,9 +73,9 @@ a:hover {
 }
 
 .brand {
+  grid-area: brand;
   display: flex;
   flex-wrap: nowrap;
-  width:100%;
   align-items: center;
   gap: 10px;
   font-family: var(--font-display);
@@ -92,10 +93,15 @@ a:hover {
 
 
 .menu {
+  grid-area: menu;
   display: flex;
+  flex-wrap: nowrap;
   justify-content: center;
   gap: 26px;
   font-weight: 600;
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
 }
 
 .menu a {
@@ -103,6 +109,7 @@ a:hover {
   padding: 8px 0;
   color: #3a3a3a;
   transition: color 0.2s ease, transform 0.2s ease;
+  display: inline-block;
 }
 
 .menu a::before {
@@ -131,11 +138,14 @@ a:hover {
 }
 
 .nav-actions {
+  grid-area: nav-actions;
   display: flex;
   justify-content: flex-end;
   align-items: center;
   gap: 14px;
   color: var(--muted);
+  justify-self: end;
+  min-width: 48px;
 }
 
 .nav-phone {
@@ -272,6 +282,7 @@ a:hover {
 .card-view-stage {
   width: 100vw;
   height: 100vh;
+  padding: 16px;
   display: grid;
   place-items: center;
   touch-action: manipulation;
@@ -279,9 +290,8 @@ a:hover {
 
 .card-view-controls {
   position: fixed;
-  top: 16px;
-  right: 16px;
-  right: 16px;
+  top: 12px;
+  right: 12px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -302,8 +312,8 @@ a:hover {
 }
 
 .close-card {
-  padding: 0 6px;
-  font-size: 12rem;
+  padding: 4px 10px;
+  font-size: 2.4rem;
   line-height: 1;
   border: none;
   background: none;
@@ -312,8 +322,8 @@ a:hover {
 
 .card-flip {
   position: relative;
-  width: 100%;
-  height: 100%;
+  width: min(420px, 90vw);
+  height: min(680px, 92vh);
   cursor: pointer;
   isolation: isolate;
   overflow: hidden;
@@ -359,13 +369,13 @@ a:hover {
   display: grid;
   gap: 18px;
   justify-items: center;
-  padding: 64px 42px;
+  padding: 48px 28px;
 }
 
 .card-front-mark {
-  width: 280px;
-  height: 190px;
-  border-radius: 18px;
+  width: clamp(200px, 58vw, 280px);
+  height: clamp(140px, 38vw, 190px);
+  border-radius: 16px;
   background: #122e2c;
   display: grid;
   place-items: center;
@@ -373,7 +383,7 @@ a:hover {
 }
 
 .card-front-mark img {
-  width: 140px;
+  width: clamp(110px, 34vw, 140px);
   height: auto;
 }
 
@@ -385,7 +395,7 @@ a:hover {
 
 .card-front-name {
   font-family: var(--font-display);
-  font-size: 4rem;
+  font-size: clamp(2.4rem, 6vw, 4rem);
   color: #1f1f1f;
 }
 
@@ -394,7 +404,7 @@ a:hover {
   color: #1c9f93;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  font-size: 1.8rem;
+  font-size: clamp(1.1rem, 3.5vw, 1.8rem);
 }
 
 .card-back {
@@ -407,9 +417,9 @@ a:hover {
   display: grid;
   grid-template-columns: 1.2fr 0.9fr;
   align-items: center;
-  gap: 20px;
-  padding: 42px 38px;
-  font-size: 2em;
+  gap: 16px;
+  padding: 32px 24px;
+  font-size: clamp(1.2em, 3.5vw, 2em);
 }
 
 .card-back-copy {
@@ -420,7 +430,7 @@ a:hover {
 
 .card-back-name {
   font-family: var(--font-display);
-  font-size: 3rem;
+  font-size: clamp(2rem, 5vw, 3rem);
 }
 
 .card-back-role {
@@ -464,8 +474,8 @@ a:hover {
 
 .card-back-qr img {
   display: block;
-  width: 200px;
-  height: 200px;
+  width: clamp(120px, 34vw, 180px);
+  height: clamp(120px, 34vw, 180px);
 }
 
 .card-flip.flipped::after {
@@ -1329,10 +1339,6 @@ footer {
     box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
   }
 
-  .nav-actions {
-    display: none;
-  }
-
   .hero-grid {
     grid-template-columns: 1fr 1fr;
   }
@@ -1378,7 +1384,7 @@ footer {
   }
 
   .page {
-    padding: 0;
+    padding: var(--nav-height) 0 0;
     background: #fff;
   }
 
@@ -1391,12 +1397,23 @@ footer {
   }
 
   .top-nav {
-    grid-template-columns: 1fr;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas:
+      'brand . nav-actions'
+      'menu menu menu';
     row-gap: 6px;
+    align-items: center;
     justify-items: start;
     text-align: left;
-    padding: 16px 18px 10px;
+    padding: 12px 18px 10px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+    border-radius: 0;
+    z-index: 60;
   }
 
   .brand {
@@ -1409,15 +1426,17 @@ footer {
     height: 28px;
   }
 
-  .nav-actions {
-    display: none;
+  .menu {
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    overflow: visible;
+    -webkit-overflow-scrolling: auto;
+    font-size: 0.95rem;
   }
 
-  .menu {
-    flex-wrap: wrap;
-    gap: 18px;
-    width: 100%;
-    justify-content: flex-start;
+  .menu a {
+    padding: 8px 2px;
   }
 
   .hero-grid {
@@ -1506,15 +1525,88 @@ footer {
   }
 
   .card-view {
-    padding: 12px;
+    padding: 0;
+  }
+
+  .card-view-stage {
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    place-items: stretch;
+  }
+
+  .card-flip {
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+  }
+
+  .card-face {
+    border-radius: 0;
+  }
+
+  .card-front-body {
+    padding: 36px 22px;
+    gap: 14px;
+  }
+
+  .card-front-tagline {
+    letter-spacing: 0.06em;
   }
 
   .card-back-body {
-    grid-template-columns: 1fr;
-    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    text-align: center;
+    padding: 26px 20px;
   }
 
   .card-back-qr {
     justify-self: center;
+    order: 0;
+  }
+
+  .card-back-copy {
+    order: 1;
+  }
+
+  .card-back-item {
+    justify-content: center;
+  }
+}
+
+@media (orientation: landscape) and (max-width: 900px) {
+  .card-view {
+    padding: 0;
+  }
+
+  .card-view-stage {
+    width: 100vw;
+    height: 100vh;
+    padding: 0;
+    place-items: stretch;
+  }
+
+  .card-flip {
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+  }
+
+  .card-face {
+    border-radius: 0;
+  }
+
+  .card-front-body {
+    padding: 28px 20px;
+    gap: 12px;
+  }
+
+  .card-back-body {
+    padding: 24px 18px;
+    gap: 12px;
+    font-size: 1.45em;
   }
 }
