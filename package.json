@@ -1,0 +1,21 @@
+{
+  "name": "pagefoundry-landing",
+  "version": "1.0.0",
+  "description": "Landing page for PageFoundry LLC - Vue.js SSR",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node server",
+    "build": "vite build && vite build --ssr",
+    "serve": "node server"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "vue": "^3.3.4",
+    "@vue/server-renderer": "^3.3.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.4.0",
+    "vite": "^4.4.0"
+  }
+}
