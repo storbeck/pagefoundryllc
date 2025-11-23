@@ -50,7 +50,7 @@
                 </button>
                 <a
                   class="contact-menu-item"
-                  href="https://www.linkedin.com/in/storbeck/"
+                  href="https://www.linkedin.com/in/geoff-storbeck-81a25035/"
                   target="_blank"
                   rel="noreferrer"
                   role="menuitem"
