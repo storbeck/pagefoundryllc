@@ -191,10 +191,9 @@
           >
             <SwiperSlide v-for="work in works" :key="work.title">
               <article class="work-card">
-                <div class="work-image">
-                  <img :src="work.image" :alt="work.title" loading="lazy" />
-                </div>
-                <div class="work-meta">
+                <div class="work-bg" :style="{ backgroundImage: `url(${work.image})` }"></div>
+                <div class="work-overlay"></div>
+                <div class="work-meta overlay">
                   <div class="work-top">{{ work.title }}</div>
                   <div class="work-sub">{{ work.subtitle }}</div>
                 </div>
