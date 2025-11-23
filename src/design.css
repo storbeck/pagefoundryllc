@@ -154,7 +154,14 @@ a:hover {
 
 .action-dots {
   display: flex;
+  align-items: center;
   gap: 6px;
+  border: none;
+  background: transparent;
+  padding: 8px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
 }
 
 .action-dots span {
@@ -163,6 +170,292 @@ a:hover {
   height: 8px;
   border-radius: 50%;
   background: #cfd3d0;
+}
+
+.action-dots:hover {
+  background: #f3f5f2;
+  transform: translateY(-1px);
+}
+
+.action-dots:focus-visible {
+  outline: 2px solid var(--deep-teal);
+  outline-offset: 2px;
+}
+
+.contact-menu {
+  position: relative;
+}
+
+.contact-menu-panel {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  min-width: 200px;
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 12px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.06);
+  border: 1px solid #f0ede6;
+  display: grid;
+  gap: 8px;
+  z-index: 30;
+}
+
+.contact-menu-header {
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: #2c2c2c;
+}
+
+.contact-menu-item {
+  display: inline-flex;
+  width: 100%;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 10px;
+  border-radius: 10px;
+  background: #f7faf8;
+  color: #1c1f1c;
+  font-weight: 700;
+  font-size: 1rem;
+  border: 1px solid #edf0ec;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+  text-align: left;
+}
+
+.contact-menu-item[type='button'] {
+  cursor: pointer;
+}
+
+.contact-menu-item:hover {
+  background: #eef7f3;
+  border-color: #dfe9e2;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+}
+
+.contact-menu-item:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.contact-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: #ffffff;
+  display: grid;
+  place-items: center;
+  box-shadow: inset 0 1px 0 #f3f3f3;
+}
+
+.contact-icon svg {
+  width: 18px;
+  height: 18px;
+  fill: var(--deep-teal);
+}
+
+.card-view {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 18% 20%, rgba(246, 193, 92, 0.26), transparent 26%),
+    radial-gradient(circle at 82% 12%, rgba(28, 159, 147, 0.18), transparent 22%),
+    linear-gradient(180deg, #f8f4eb 0%, #f7f2e7 100%);
+  z-index: 200;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  min-height: 100vh;
+}
+
+.card-view-stage {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  place-items: center;
+  touch-action: manipulation;
+}
+
+.card-view-controls {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  right: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  pointer-events: none;
+  z-index: 210;
+}
+
+.card-view-controls .ghost-btn,
+.card-view-controls .flip-btn {
+  pointer-events: auto;
+}
+
+.card-view-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.close-card {
+  padding: 0 6px;
+  font-size: 12rem;
+  line-height: 1;
+  border: none;
+  background: none;
+  pointer-events: auto;
+}
+
+.card-flip {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  perspective: 1400px;
+  cursor: pointer;
+  transform-style: preserve-3d;
+}
+
+.card-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 0;
+  overflow: hidden;
+  backface-visibility: hidden;
+  box-shadow: none;
+  display: grid;
+  align-items: center;
+  transition: transform 0.65s ease;
+}
+
+.card-front {
+  background: linear-gradient(180deg, #f7f3eb 0%, #ffffff 100%);
+}
+
+.card-front-body {
+  display: grid;
+  gap: 18px;
+  justify-items: center;
+  padding: 64px 42px;
+}
+
+.card-front-mark {
+  width: 280px;
+  height: 190px;
+  border-radius: 18px;
+  background: #122e2c;
+  display: grid;
+  place-items: center;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.card-front-mark img {
+  width: 140px;
+  height: auto;
+}
+
+.card-front-text {
+  text-align: center;
+  display: grid;
+  gap: 6px;
+}
+
+.card-front-name {
+  font-family: var(--font-display);
+  font-size: 4rem;
+  color: #1f1f1f;
+}
+
+.card-front-tagline {
+  font-weight: 500;
+  color: #1c9f93;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 1.8rem;
+}
+
+.card-back {
+  background: #f3efe5;
+  transform: rotateY(180deg);
+}
+
+.card-back-body {
+  display: grid;
+  grid-template-columns: 1.2fr 0.9fr;
+  align-items: center;
+  gap: 20px;
+  padding: 42px 38px;
+  font-size: 2em;
+}
+
+.card-back-copy {
+  display: grid;
+  gap: 10px;
+  color: #1f1f1f;
+}
+
+.card-back-name {
+  font-family: var(--font-display);
+  font-size: 3rem;
+}
+
+.card-back-role {
+
+  color: #455049;
+}
+
+.card-back-list {
+  display: grid;
+  gap: 8px;
+  font-weight: 700;
+}
+
+.card-back-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+
+.card-back-icon {
+  font-size: 1.1rem;
+}
+
+.card-back-qr {
+  justify-self: end;
+  background: #eaf3ef;
+  padding: 8px;
+  border-radius: 12px;
+  border: 2px solid #2f9b90;
+  box-shadow: inset 0 1px 0 #ffffff;
+}
+
+.card-back-qr img {
+  display: block;
+  width: 200px;
+  height: 200px;
+}
+
+.card-flip.flipped .card-front {
+  transform: rotateY(180deg);
+}
+
+.card-flip.flipped .card-back {
+  transform: rotateY(360deg);
+}
+
+.flip-btn {
+  background: var(--deep-teal);
+  color: #fff;
+  box-shadow: 0 12px 22px rgba(0, 0, 0, 0.14);
+}
+
+.flip-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 24px rgba(0, 0, 0, 0.16);
 }
 
 .hero {
@@ -970,6 +1263,17 @@ footer {
   font-size: 0.95rem;
 }
 
+.fade-scale-enter-active,
+.fade-scale-leave-active {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.fade-scale-enter-from,
+.fade-scale-leave-to {
+  opacity: 0;
+  transform: translateY(-4px) scale(0.98);
+}
+
 @media (max-width: 1024px) {
   body {
     background: #fff;
@@ -1161,5 +1465,18 @@ footer {
 
   .gallery-fade {
     display: none;
+  }
+
+  .card-view {
+    padding: 12px;
+  }
+
+  .card-back-body {
+    grid-template-columns: 1fr;
+    text-align: left;
+  }
+
+  .card-back-qr {
+    justify-self: center;
   }
 }

@@ -17,11 +17,135 @@
           </a>
         </div>
         <div class="nav-actions">
-          <div class="action-dots">
-            <span></span><span></span><span></span>
+          <div class="contact-menu">
+            <button
+              class="action-dots"
+              type="button"
+              aria-label="Open contact menu"
+              :aria-expanded="contactOpen"
+              @click.stop="toggleContactMenu"
+              ref="dotsButton"
+            >
+              <span></span><span></span><span></span>
+            </button>
+            <transition name="fade-scale">
+              <div
+                v-if="contactOpen"
+                class="contact-menu-panel"
+                ref="contactPanel"
+                role="menu"
+                aria-label="Contact links"
+                @click.stop
+              >
+                <div class="contact-menu-header">Get in touch</div>
+                <button class="contact-menu-item" type="button" role="menuitem" @click="openCardView">
+                  <span class="contact-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path
+                        d="M5 5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v14l-4-3-4 3-4-3-2 1.5V5Z"
+                      />
+                    </svg>
+                  </span>
+                  Card
+                </button>
+                <a
+                  class="contact-menu-item"
+                  href="https://www.linkedin.com/in/storbeck/"
+                  target="_blank"
+                  rel="noreferrer"
+                  role="menuitem"
+                >
+                  <span class="contact-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path
+                        d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5ZM.24 8h4.52V24H.24V8ZM8.77 8h4.33v2.18h.06c.6-1.14 2.07-2.35 4.27-2.35 4.57 0 5.41 3 5.41 6.9V24h-4.71v-7.27c0-1.73-.03-3.95-2.41-3.95-2.41 0-2.78 1.88-2.78 3.82V24H8.77V8Z"
+                      />
+                    </svg>
+                  </span>
+                  LinkedIn
+                </a>
+                <a class="contact-menu-item" href="https://storbeck.dev" target="_blank" rel="noreferrer" role="menuitem">
+                  <span class="contact-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path
+                        d="M4 4.5A2.5 2.5 0 0 1 6.5 2h11A2.5 2.5 0 0 1 20 4.5v15.11c0 .2-.22.33-.4.23L15.7 17.5H6.5A2.5 2.5 0 0 1 4 15v-10Zm2.5-.5a.5.5 0 0 0-.5.5v10a.5.5 0 0 0 .5.5h9.5l1.5 1V4.5a.5.5 0 0 0-.5-.5h-10Z"
+                      />
+                    </svg>
+                  </span>
+                  Blog
+                </a>
+                <a class="contact-menu-item" href="mailto:hello@pagefoundry.dev" role="menuitem">
+                  <span class="contact-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path
+                        d="M3 6.5A2.5 2.5 0 0 1 5.5 4h13A2.5 2.5 0 0 1 21 6.5v11A2.5 2.5 0 0 1 18.5 20h-13A2.5 2.5 0 0 1 3 17.5v-11Zm2.7-.4a.5.5 0 0 0-.7.4v.2l6 4.3a1.5 1.5 0 0 0 1.8 0l6-4.2v-.3a.5.5 0 0 0-.7-.4L12 10 5.7 6.1Z"
+                      />
+                    </svg>
+                  </span>
+                  Email
+                </a>
+              </div>
+            </transition>
           </div>
         </div>
       </nav>
+      <transition name="fade-scale">
+        <div
+          v-if="showCardView"
+          class="card-view"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Digital business card full view"
+        >
+          <div class="card-view-controls">
+            <div class="card-view-actions">
+              <button class="close-card" type="button" @click="closeCardView" aria-label="Close card view">
+                ×
+              </button>
+            </div>
+          </div>
+          <div class="card-view-stage">
+            <div class="card-flip" :class="{ flipped: cardFlipped }" @click="toggleCardFlip" aria-live="polite">
+              <div class="card-face card-front">
+                <div class="card-front-body">
+                  <div class="card-front-mark">
+                    <img src="/images/logo.png" alt="PageFoundry logo" />
+                  </div>
+                  <div class="card-front-text">
+                    <div class="card-front-name">PageFoundry LLC</div>
+                    <div class="card-front-tagline">Web Development & Digital Solutions</div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-face card-back">
+                <div class="card-back-body">
+                  <div class="card-back-copy">
+                    <div class="card-back-name">Geoff Storbeck</div>
+                    <div class="card-back-role">Founder & Developer</div>
+                    <div class="card-back-list">
+                      <div class="card-back-item">
+                        <span class="card-back-icon">✉️</span>
+                        <span>geoff@pagefoundry.dev</span>
+                      </div>
+                      <div class="card-back-item">
+                        <span class="card-back-icon">📍</span>
+                        <span>Ormond Beach, FL</span>
+                      </div>
+                      <div class="card-back-item">
+                        <span class="card-back-icon">🖥️</span>
+                        <span>https://pagefoundry.dev</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-back-qr">
+                    <img src="/images/business-card-qr.png" alt="QR code to pagefoundry.dev" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </transition>
 
       <header class="hero" id="top">
         <div class="hero-grid">
@@ -51,7 +175,7 @@
           <div class="hero-right">
             <p>I’m a modern blacksmith for the web—shaping ideas into durable, beautiful products.</p>
             <div class="hero-contacts">
-              <a class="icon-btn" aria-label="LinkedIn" href="https://www.linkedin.com/in/storbeck/" target="_blank" rel="noreferrer">
+              <a class="icon-btn" aria-label="LinkedIn" href="https://www.linkedin.com/in/geoff-storbeck-81a25035/" target="_blank" rel="noreferrer">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5ZM.24 8h4.52V24H.24V8ZM8.77 8h4.33v2.18h.06c.6-1.14 2.07-2.35 4.27-2.35 4.57 0 5.41 3 5.41 6.9V24h-4.71v-7.27c0-1.73-.03-3.95-2.41-3.95-2.41 0-2.78 1.88-2.78 3.82V24H8.77V8Z"/>
                 </svg>
@@ -279,6 +403,11 @@ const navLinks = [
 ];
 
 const activeSection = ref('about');
+const contactOpen = ref(false);
+const dotsButton = ref(null);
+const contactPanel = ref(null);
+const showCardView = ref(false);
+const cardFlipped = ref(false);
 
 const services = [
   { title: 'Frontend Architecture', projects: 'Design systems, UI kits, scalable code', color: 'teal' },
@@ -422,6 +551,32 @@ const experience = [
 
 let observer;
 let hashListener;
+let outsideClickListener;
+let escapeListener;
+
+const toggleContactMenu = () => {
+  contactOpen.value = !contactOpen.value;
+};
+
+const closeContactMenu = () => {
+  contactOpen.value = false;
+};
+
+const openCardView = () => {
+  contactOpen.value = false;
+  showCardView.value = true;
+  cardFlipped.value = false;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+const closeCardView = () => {
+  showCardView.value = false;
+  cardFlipped.value = false;
+};
+
+const toggleCardFlip = () => {
+  cardFlipped.value = !cardFlipped.value;
+};
 
 onMounted(() => {
   const sectionIds = navLinks.map((link) => link.id);
@@ -460,6 +615,28 @@ onMounted(() => {
   };
 
   window.addEventListener('hashchange', hashListener);
+
+  outsideClickListener = (event) => {
+    const target = event.target;
+    const clickedMenu = contactPanel.value?.contains(target);
+    const clickedButton = dotsButton.value?.contains(target);
+    if (!clickedMenu && !clickedButton) {
+      closeContactMenu();
+    }
+  };
+
+  escapeListener = (event) => {
+    if (event.key === 'Escape') {
+      if (showCardView.value) {
+        closeCardView();
+      } else {
+        closeContactMenu();
+      }
+    }
+  };
+
+  window.addEventListener('click', outsideClickListener);
+  window.addEventListener('keydown', escapeListener);
 });
 
 onBeforeUnmount(() => {
@@ -468,6 +645,12 @@ onBeforeUnmount(() => {
   }
   if (hashListener) {
     window.removeEventListener('hashchange', hashListener);
+  }
+  if (outsideClickListener) {
+    window.removeEventListener('click', outsideClickListener);
+  }
+  if (escapeListener) {
+    window.removeEventListener('keydown', escapeListener);
   }
 });
 </script>
