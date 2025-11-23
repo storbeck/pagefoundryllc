@@ -1,20 +1,14 @@
 {
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist"
-      }
-    },
-    {
-      "src": "api/ssr.js",
-      "use": "@vercel/node"
+  "buildCommand": "npm run vercel-build",
+  "outputDirectory": "dist",
+  "functions": {
+    "api/ssr.js": {
+      "includeFiles": "dist/**"
     }
-  ],
+  },
   "routes": [
     { "src": "/api/ssr", "dest": "/api/ssr" },
     { "handle": "filesystem" },
-    { "src": "/.*", "dest": "/api/ssr" }
+    { "src": "/(.*)", "dest": "/api/ssr" }
   ]
 }
