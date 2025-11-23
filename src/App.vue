@@ -51,11 +51,11 @@
           <div class="hero-right">
             <p>I’m a modern blacksmith for the web—shaping ideas into durable, beautiful products.</p>
             <div class="hero-contacts">
-              <button class="icon-btn" aria-label="Call">
+              <a class="icon-btn" aria-label="LinkedIn" href="https://www.linkedin.com/in/storbeck/" target="_blank" rel="noreferrer">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M6.6 2.5c.4-.6 1.1-.6 1.5-.2l3 2.8c.4.4.4 1 0 1.4L9.4 8c.7 1.5 1.9 2.9 3.4 4.2 1.5 1.3 3 2.3 4.6 2.9l1.6-1.5c.4-.4 1-.4 1.4 0l2.7 3c.4.4.4 1.2-.2 1.6l-1.8 1.2c-1 .6-2.2.9-3.4.7-2.8-.4-6-2.2-9.5-5.4-3.5-3.2-5.4-6.2-5.8-9.1-.2-1.2 0-2.4.6-3.4l1-1.4Z" />
+                  <path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5ZM.24 8h4.52V24H.24V8ZM8.77 8h4.33v2.18h.06c.6-1.14 2.07-2.35 4.27-2.35 4.57 0 5.41 3 5.41 6.9V24h-4.71v-7.27c0-1.73-.03-3.95-2.41-3.95-2.41 0-2.78 1.88-2.78 3.82V24H8.77V8Z"/>
                 </svg>
-              </button>
+              </a>
               <button class="icon-btn" aria-label="Email">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M3 6.5A2.5 2.5 0 0 1 5.5 4h13A2.5 2.5 0 0 1 21 6.5v11A2.5 2.5 0 0 1 18.5 20h-13A2.5 2.5 0 0 1 3 17.5v-11Zm2.7-.4a.5.5 0 0 0-.7.4v.2l6 4.3a1.5 1.5 0 0 0 1.8 0l6-4.2v-.3a.5.5 0 0 0-.7-.4L12 10 5.7 6.1Z" />
@@ -168,20 +168,41 @@
             <h2>Recent Frontend Work</h2>
           </div>
         </div>
-        <div class="works-row">
-          <div
-            v-for="work in works"
-            :key="work.title"
-            class="work-card"
+        <div class="works-swiper">
+          <Swiper
+            :modules="swiperModules"
+            :slides-per-view="1.1"
+            :centeredSlides="false"
+            :loop="true"
+            :spaceBetween="12"
+            :navigation="true"
+            :pagination="{ clickable: true }"
+            :grabCursor="true"
+            :simulateTouch="true"
+            :allowTouchMove="true"
+            :longSwipesRatio="0.2"
+            :threshold="6"
+            :breakpoints="{
+              720: { slidesPerView: 1.3, spaceBetween: 14 },
+              1024: { slidesPerView: 2, spaceBetween: 16 },
+              1280: { slidesPerView: 3, spaceBetween: 18 }
+            }"
+            class="works-swiper-track"
           >
-            <div class="work-image">
-              <img :src="work.image" :alt="work.title" loading="lazy" />
-            </div>
-            <div class="work-meta">
-              <div class="work-top">{{ work.title }}</div>
-              <div class="work-sub">{{ work.subtitle }}</div>
-            </div>
-          </div>
+            <SwiperSlide v-for="work in works" :key="work.title">
+              <article class="work-card">
+                <div class="work-image">
+                  <img :src="work.image" :alt="work.title" loading="lazy" />
+                </div>
+                <div class="work-meta">
+                  <div class="work-top">{{ work.title }}</div>
+                  <div class="work-sub">{{ work.subtitle }}</div>
+                </div>
+              </article>
+            </SwiperSlide>
+            <div class="gallery-fade fade-left"></div>
+            <div class="gallery-fade fade-right"></div>
+          </Swiper>
         </div>
       </section>
 
@@ -244,6 +265,11 @@
 
 <script setup>
 import { onBeforeUnmount, onMounted, ref } from 'vue';
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import { Navigation, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
 const navLinks = [
   { id: 'about', label: 'About' },
@@ -293,6 +319,7 @@ const works = [
     image: '/projects/gdotv/dark.png'
   }
 ];
+const swiperModules = [Navigation, Pagination];
 
 const testimonials = [
   {

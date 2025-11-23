@@ -7,10 +7,7 @@ export default defineConfig({
   plugins: [vue()],
   build: {
     rollupOptions: {
-      input: {
-        main: resolve(fileURLToPath(new URL('.', import.meta.url)), 'index.html'),
-        server: resolve(fileURLToPath(new URL('.', import.meta.url)), 'src/entry-server.js')
-      }
+      input: resolve(fileURLToPath(new URL('.', import.meta.url)), 'index.html')
     }
   }
 })
