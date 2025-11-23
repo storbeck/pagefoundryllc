@@ -124,18 +124,31 @@
                     <div class="card-back-role">Founder & Developer</div>
                     <div class="card-back-list">
                       <div class="card-back-item">
-                        <span class="card-back-icon">✉️</span>
+                        <span class="card-back-icon" aria-hidden="true">
+                          <svg viewBox="0 0 24 24">
+                            <path :d="icons.email" />
+                          </svg>
+                        </span>
                         <span>geoff@pagefoundry.dev</span>
                       </div>
                       <div class="card-back-item">
-                        <span class="card-back-icon">📍</span>
+                        <span class="card-back-icon" aria-hidden="true">
+                          <svg viewBox="0 0 24 24">
+                            <path :d="icons.location" />
+                          </svg>
+                        </span>
                         <span>Ormond Beach, FL</span>
                       </div>
                       <div class="card-back-item">
-                        <span class="card-back-icon">🖥️</span>
+                        <span class="card-back-icon" aria-hidden="true">
+                          <svg viewBox="0 0 24 24">
+                            <path :d="icons.web" />
+                          </svg>
+                        </span>
                         <span>https://pagefoundry.dev</span>
                       </div>
                     </div>
+
                   </div>
                   <div class="card-back-qr">
                     <img src="/images/business-card-qr.png" alt="QR code to pagefoundry.dev" />
@@ -393,6 +406,7 @@ import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import { mdiEmailOutline, mdiMapMarkerOutline, mdiWeb } from '@mdi/js';
 
 const navLinks = [
   { id: 'about', label: 'About' },
@@ -414,6 +428,12 @@ const services = [
   { title: 'Product UI & Dashboards', projects: 'Complex data, multi-surface flows', color: 'orange' },
   { title: 'Rapid Prototyping', projects: 'Pixel-accurate Figma-to-frontend delivery', color: 'red' }
 ];
+
+const icons = {
+  email: mdiEmailOutline,
+  location: mdiMapMarkerOutline,
+  web: mdiWeb
+};
 
 const works = [
   {

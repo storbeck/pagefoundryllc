@@ -314,25 +314,45 @@ a:hover {
   position: relative;
   width: 100%;
   height: 100%;
-  perspective: 1400px;
   cursor: pointer;
-  transform-style: preserve-3d;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.card-flip::after {
+  content: '';
+  position: absolute;
+  inset: -22%;
+  background: radial-gradient(circle at 25% 20%, rgba(28, 159, 147, 0.08), transparent 38%),
+    radial-gradient(circle at 70% 65%, rgba(246, 193, 92, 0.1), transparent 42%);
+  opacity: 0;
+  filter: blur(22px);
+  transition: opacity 0.22s ease;
+  pointer-events: none;
+  z-index: 1;
 }
 
 .card-face {
   position: absolute;
   inset: 0;
-  border-radius: 0;
+  border-radius: 18px;
   overflow: hidden;
-  backface-visibility: hidden;
   box-shadow: none;
   display: grid;
   align-items: center;
-  transition: transform 0.65s ease;
+  transition: opacity 0.22s ease, transform 0.22s ease, filter 0.22s ease;
+  transform-origin: 50% 50%;
+  z-index: 2;
+  opacity: 0;
+  filter: blur(6px);
 }
 
 .card-front {
   background: linear-gradient(180deg, #f7f3eb 0%, #ffffff 100%);
+  opacity: 1;
+  filter: blur(0);
+  transform: translateY(0) scale(1);
+  z-index: 3;
 }
 
 .card-front-body {
@@ -379,7 +399,8 @@ a:hover {
 
 .card-back {
   background: #f3efe5;
-  transform: rotateY(180deg);
+  transform: translateY(8px) scale(0.985);
+  pointer-events: none;
 }
 
 .card-back-body {
@@ -421,7 +442,15 @@ a:hover {
 }
 
 .card-back-icon {
-  font-size: 1.1rem;
+  display: inline-flex;
+  width: 22px;
+  height: 22px;
+}
+
+.card-back-icon svg {
+  width: 100%;
+  height: 100%;
+  fill: #1c9f93;
 }
 
 .card-back-qr {
@@ -439,12 +468,21 @@ a:hover {
   height: 200px;
 }
 
+.card-flip.flipped::after {
+  opacity: 0.48;
+}
+
 .card-flip.flipped .card-front {
-  transform: rotateY(180deg);
+  opacity: 0;
+  transform: translateY(-10px) scale(1.01);
+  filter: blur(8px);
 }
 
 .card-flip.flipped .card-back {
-  transform: rotateY(360deg);
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+  pointer-events: auto;
 }
 
 .flip-btn {
