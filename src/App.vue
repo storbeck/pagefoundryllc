@@ -26,7 +26,7 @@
       <header class="hero" id="top">
         <div class="hero-grid">
           <div class="hero-left">
-            <div class="email">contact@pagefoundry.dev</div>
+            <div class="email">hello@pagefoundry.dev</div>
             <div class="hero-title-row">
               <h1>Hey There,<br />I’m Geoff at PageFoundry</h1>
             </div>
