@@ -569,7 +569,7 @@ a:hover {
 
 .hero-grid {
   display: grid;
-  grid-template-columns: 1.05fr 0.95fr 0.7fr;
+  grid-template-columns: 1.05fr 0.95fr minmax(360px, 0.9fr);
   gap: 32px;
   align-items: center;
 }
@@ -728,7 +728,8 @@ a:hover {
 }
 
 .contact-form--hero {
-  max-width: 320px;
+  max-width: 400px;
+  width: 100%;
 }
 
 .contact-form--cta {
@@ -1609,6 +1610,7 @@ footer {
   .contact-form--hero,
   .contact-form--cta {
     max-width: 100%;
+    width: 100%;
   }
 
   .cta {
