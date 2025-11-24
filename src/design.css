@@ -61,6 +61,7 @@ a:hover {
   grid-template-columns: auto 1fr auto;
   grid-template-areas: 'brand menu nav-actions';
   align-items: center;
+  min-height: 110px;
   padding: 20px 32px 14px;
   border-bottom: 1px solid #f1eee7;
   position: sticky;
@@ -116,9 +117,9 @@ a:hover {
   content: '';
   position: absolute;
   left: 50%;
-  bottom: -6px;
+  bottom: 0;
   width: 14px;
-  height: 4px;
+  height: 3px;
   border-radius: 3px;
   background: transparent;
   transform: translateX(-50%);
@@ -1402,6 +1403,7 @@ footer {
     left: 0;
     right: 0;
     width: 100vw;
+    min-height: 96px;
     grid-template-columns: auto 1fr auto;
     grid-template-areas:
       'brand . nav-actions'

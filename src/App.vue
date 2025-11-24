@@ -347,9 +347,6 @@
           <div>
             <h2>What people say</h2>
           </div>
-          <div class="dots">
-            <span class="active"></span><span></span><span></span>
-          </div>
         </div>
         <div class="testimonial-grid">
           <article v-for="item in testimonials" :key="item.name" class="testimonial-card">
@@ -400,7 +397,7 @@
 </template>
 
 <script setup>
-import { onBeforeUnmount, onMounted, ref } from 'vue';
+import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
@@ -421,6 +418,12 @@ const dotsButton = ref(null);
 const contactPanel = ref(null);
 const showCardView = ref(false);
 const cardFlipped = ref(false);
+const originalBodyOverflow = ref('');
+const originalHtmlOverflow = ref('');
+const originalBodyPosition = ref('');
+const originalBodyTop = ref('');
+const originalBodyWidth = ref('');
+const scrollLockY = ref(0);
 
 const services = [
   { title: 'Frontend Architecture', projects: 'Design systems, UI kits, scalable code', color: 'teal' },
@@ -656,6 +659,12 @@ onMounted(() => {
 
   window.addEventListener('click', outsideClickListener);
   window.addEventListener('keydown', escapeListener);
+
+  originalBodyOverflow.value = document.body.style.overflow || '';
+  originalHtmlOverflow.value = document.documentElement.style.overflow || '';
+  originalBodyPosition.value = document.body.style.position || '';
+  originalBodyTop.value = document.body.style.top || '';
+  originalBodyWidth.value = document.body.style.width || '';
 });
 
 onBeforeUnmount(() => {
@@ -670,6 +679,37 @@ onBeforeUnmount(() => {
   }
   if (escapeListener) {
     window.removeEventListener('keydown', escapeListener);
+  }
+
+  document.body.style.overflow = originalBodyOverflow.value;
+  document.documentElement.style.overflow = originalHtmlOverflow.value;
+  document.body.style.position = originalBodyPosition.value;
+  document.body.style.top = originalBodyTop.value;
+  document.body.style.width = originalBodyWidth.value;
+});
+
+watch(showCardView, (open) => {
+  if (open) {
+    originalBodyOverflow.value = document.body.style.overflow || '';
+    originalHtmlOverflow.value = document.documentElement.style.overflow || '';
+    originalBodyPosition.value = document.body.style.position || '';
+    originalBodyTop.value = document.body.style.top || '';
+    originalBodyWidth.value = document.body.style.width || '';
+    scrollLockY.value = window.scrollY || window.pageYOffset || 0;
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollLockY.value}px`;
+    document.body.style.width = '100%';
+  } else {
+    document.body.style.overflow = originalBodyOverflow.value;
+    document.documentElement.style.overflow = originalHtmlOverflow.value;
+    document.body.style.position = originalBodyPosition.value;
+    document.body.style.top = originalBodyTop.value;
+    document.body.style.width = originalBodyWidth.value;
+    if (scrollLockY.value) {
+      window.scrollTo(0, scrollLockY.value);
+    }
   }
 });
 </script>
