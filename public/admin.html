@@ -49,6 +49,13 @@
         font-weight: 700;
         cursor: pointer;
       }
+      label {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.95rem;
+        color: #3d3f3e;
+      }
       button:disabled {
         opacity: 0.6;
         cursor: not-allowed;
@@ -89,6 +96,10 @@
           <input id="token" type="password" placeholder="Admin token" />
           <button id="load">Load messages</button>
         </div>
+        <div class="row" style="margin-top: -4px; justify-content: space-between;">
+          <label><input id="remember" type="checkbox" /> Remember token on this device</label>
+          <button id="clear-token" type="button" style="background:#6a6f6c;">Clear token</button>
+        </div>
         <div class="status" id="status">Idle</div>
         <div class="messages" id="messages"></div>
       </div>
@@ -99,8 +110,35 @@
       const msgEl = document.getElementById('messages')
       const loadBtn = document.getElementById('load')
       const tokenEl = document.getElementById('token')
+       const rememberEl = document.getElementById('remember')
+      const clearTokenBtn = document.getElementById('clear-token')
       const STORAGE_KEY = 'pf_contact_sent'
+      const TOKEN_KEY = 'pf_admin_token'
       let messages = []
+
+      function hydrateToken() {
+        try {
+          const saved = window.localStorage.getItem(TOKEN_KEY)
+          if (saved) {
+            tokenEl.value = saved
+            rememberEl.checked = true
+          }
+        } catch {
+          /* ignore storage errors */
+        }
+      }
+
+      function persistToken(token) {
+        try {
+          if (rememberEl.checked && token) {
+            window.localStorage.setItem(TOKEN_KEY, token)
+          } else {
+            window.localStorage.removeItem(TOKEN_KEY)
+          }
+        } catch {
+          /* ignore storage errors */
+        }
+      }
 
       function renderMessages() {
         msgEl.innerHTML = ''
@@ -136,6 +174,7 @@
           statusEl.textContent = 'Enter a token'
           return
         }
+        persistToken(token)
         loadBtn.disabled = true
         statusEl.textContent = 'Loading…'
         msgEl.innerHTML = ''
@@ -170,6 +209,7 @@
           statusEl.textContent = 'Enter a token first'
           return
         }
+        persistToken(token)
         if (!id) {
           statusEl.textContent = 'Missing id'
           return
@@ -215,6 +255,14 @@
       tokenEl.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') loadMessages()
       })
+      clearTokenBtn.addEventListener('click', () => {
+        tokenEl.value = ''
+        rememberEl.checked = false
+        persistToken('')
+        statusEl.textContent = 'Token cleared from storage'
+      })
+
+      hydrateToken()
     </script>
   </body>
 </html>
