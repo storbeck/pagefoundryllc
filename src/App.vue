@@ -186,19 +186,7 @@
           </div>
 
           <div class="hero-right">
-            <p>I’m a modern blacksmith for the web—shaping ideas into durable, beautiful products.</p>
-            <div class="hero-contacts">
-              <a class="icon-btn" aria-label="LinkedIn" href="https://www.linkedin.com/in/geoff-storbeck-81a25035/" target="_blank" rel="noreferrer">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5ZM.24 8h4.52V24H.24V8ZM8.77 8h4.33v2.18h.06c.6-1.14 2.07-2.35 4.27-2.35 4.57 0 5.41 3 5.41 6.9V24h-4.71v-7.27c0-1.73-.03-3.95-2.41-3.95-2.41 0-2.78 1.88-2.78 3.82V24H8.77V8Z"/>
-                </svg>
-              </a>
-              <a class="icon-btn" aria-label="Email" href="mailto:hello@pagefoundry.dev">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M3 6.5A2.5 2.5 0 0 1 5.5 4h13A2.5 2.5 0 0 1 21 6.5v11A2.5 2.5 0 0 1 18.5 20h-13A2.5 2.5 0 0 1 3 17.5v-11Zm2.7-.4a.5.5 0 0 0-.7.4v.2l6 4.3a1.5 1.5 0 0 0 1.8 0l6-4.2v-.3a.5.5 0 0 0-.7-.4L12 10 5.7 6.1Z" />
-                </svg>
-              </a>
-            </div>
+            <ContactForm variant="hero" />
           </div>
         </div>
       </header>
@@ -307,6 +295,7 @@
         </div>
         <div class="works-swiper">
           <Swiper
+            v-if="isClient"
             :modules="swiperModules"
             :slides-per-view="1.1"
             :centeredSlides="false"
@@ -339,6 +328,16 @@
             <div class="gallery-fade fade-left"></div>
             <div class="gallery-fade fade-right"></div>
           </Swiper>
+          <div v-else class="works-grid-fallback">
+            <article v-for="work in works" :key="work.title" class="work-card fallback">
+              <div class="work-bg" :style="{ backgroundImage: `url(${work.image})` }"></div>
+              <div class="work-overlay"></div>
+              <div class="work-meta overlay">
+                <div class="work-top">{{ work.title }}</div>
+                <div class="work-sub">{{ work.subtitle }}</div>
+              </div>
+            </article>
+          </div>
         </div>
       </section>
 
@@ -375,10 +374,8 @@
             <a class="cta-pill ghost" href="mailto:hello@pagefoundry.dev">Email me</a>
           </div>
         </div>
-        <div class="cta-info">
-          <div class="info-title">Information</div>
-          <div>Ormond Beach, Florida, USA</div>
-          <div>hello@pagefoundry.dev</div>
+        <div class="cta-form-wrap">
+          <ContactForm variant="cta" />
         </div>
       </section>
 
@@ -404,6 +401,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { mdiEmailOutline, mdiMapMarkerOutline, mdiWeb } from '@mdi/js';
+import ContactForm from './components/ContactForm.vue';
 
 const navLinks = [
   { id: 'about', label: 'About' },
@@ -413,6 +411,7 @@ const navLinks = [
 ];
 
 const activeSection = ref('about');
+const isClient = ref(false);
 const contactOpen = ref(false);
 const dotsButton = ref(null);
 const contactPanel = ref(null);
@@ -601,6 +600,7 @@ const toggleCardFlip = () => {
 };
 
 onMounted(() => {
+  isClient.value = true;
   const sectionIds = navLinks.map((link) => link.id);
   const targets = sectionIds
     .map((id) => document.getElementById(id))

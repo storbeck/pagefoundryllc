@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PageFoundry Admin</title>
+    <style>
+      body {
+        font-family: system-ui, -apple-system, sans-serif;
+        margin: 0;
+        background: #f7f7f5;
+        color: #1f1f1f;
+      }
+      header {
+        padding: 16px 20px;
+        background: #0d8b81;
+        color: #fff;
+        font-weight: 700;
+      }
+      main {
+        padding: 18px;
+        max-width: 920px;
+        margin: 0 auto;
+      }
+      .panel {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
+        padding: 16px;
+      }
+      .row {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 12px;
+        align-items: center;
+      }
+      input[type='password'] {
+        flex: 1;
+        padding: 10px 12px;
+        border: 1px solid #d9dedc;
+        border-radius: 8px;
+      }
+      button {
+        padding: 10px 14px;
+        border: none;
+        background: #0d8b81;
+        color: #fff;
+        border-radius: 8px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+      .status {
+        font-size: 0.95rem;
+        color: #4a4f4c;
+      }
+      .messages {
+        display: grid;
+        gap: 12px;
+        margin-top: 12px;
+      }
+      .card {
+        border: 1px solid #e7ece9;
+        border-radius: 10px;
+        padding: 12px;
+        background: #fbfdfc;
+      }
+      .meta {
+        display: flex;
+        gap: 12px;
+        color: #6a6f6c;
+        font-size: 0.95rem;
+        flex-wrap: wrap;
+      }
+      .message {
+        margin-top: 6px;
+        white-space: pre-wrap;
+      }
+    </style>
+  </head>
+  <body>
+    <header>PageFoundry Admin</header>
+    <main>
+      <div class="panel">
+        <div class="row">
+          <input id="token" type="password" placeholder="Admin token" />
+          <button id="load">Load messages</button>
+        </div>
+        <div class="status" id="status">Idle</div>
+        <div class="messages" id="messages"></div>
+      </div>
+    </main>
+
+    <script>
+      const statusEl = document.getElementById('status')
+      const msgEl = document.getElementById('messages')
+      const loadBtn = document.getElementById('load')
+      const tokenEl = document.getElementById('token')
+      const STORAGE_KEY = 'pf_contact_sent'
+      let messages = []
+
+      function renderMessages() {
+        msgEl.innerHTML = ''
+        if (!messages.length) return
+        const frag = document.createDocumentFragment()
+        messages.forEach((item) => {
+          const card = document.createElement('div')
+          card.className = 'card'
+          const meta = document.createElement('div')
+          meta.className = 'meta'
+          const time = new Date(item.createdAt || 0).toLocaleString()
+          meta.textContent = `${time} • ${item.name} • ${item.email} • ${item.ip || ''}`
+          const msg = document.createElement('div')
+          msg.className = 'message'
+          msg.textContent = item.message
+          const actions = document.createElement('div')
+          actions.style.marginTop = '8px'
+          const delBtn = document.createElement('button')
+          delBtn.textContent = 'Delete'
+          delBtn.style.background = '#c03636'
+          delBtn.style.marginRight = '8px'
+          delBtn.addEventListener('click', () => deleteMessage(item.id))
+          actions.append(delBtn)
+          card.append(meta, msg, actions)
+          frag.append(card)
+        })
+        msgEl.append(frag)
+      }
+
+      async function loadMessages() {
+        const token = tokenEl.value.trim()
+        if (!token) {
+          statusEl.textContent = 'Enter a token'
+          return
+        }
+        loadBtn.disabled = true
+        statusEl.textContent = 'Loading…'
+        msgEl.innerHTML = ''
+        try {
+          const res = await fetch('/api/contact', {
+            headers: { Authorization: 'Bearer ' + token }
+          })
+          if (!res.ok) {
+            statusEl.textContent = 'Auth failed or request error'
+            loadBtn.disabled = false
+            return
+          }
+          const data = await res.json()
+          messages = data.messages || []
+          renderMessages()
+          if (!messages.length) {
+            statusEl.textContent = 'No messages yet'
+          } else {
+            statusEl.textContent = `${messages.length} messages`
+          }
+        } catch (err) {
+          console.error(err)
+          statusEl.textContent = 'Error loading messages'
+        } finally {
+          loadBtn.disabled = false
+        }
+      }
+
+      async function deleteMessage(id) {
+        const token = tokenEl.value.trim()
+        if (!token) {
+          statusEl.textContent = 'Enter a token first'
+          return
+        }
+        if (!id) {
+          statusEl.textContent = 'Missing id'
+          return
+        }
+        const confirmed = window.confirm('Delete this message?')
+        if (!confirmed) return
+        statusEl.textContent = 'Deleting…'
+        try {
+          const payload = messages.find((m) => m.id === id) || {}
+          const params = new URLSearchParams()
+          if (payload.id) params.set('id', payload.id)
+          if (payload.createdAt) params.set('createdAt', payload.createdAt)
+          if (payload.email) params.set('email', payload.email)
+          const res = await fetch('/api/contact' + (params.toString() ? `?${params}` : ''), {
+            method: 'DELETE',
+            headers: { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              id: payload.id,
+              createdAt: payload.createdAt,
+              email: payload.email
+            })
+          })
+          if (!res.ok) {
+            statusEl.textContent = 'Delete failed'
+            return
+          }
+          messages = messages.filter((m) => m.id !== id)
+          renderMessages()
+          statusEl.textContent = 'Deleted'
+          try {
+            window.localStorage.removeItem(STORAGE_KEY)
+            window.dispatchEvent(new CustomEvent('contact:reset'))
+          } catch {
+            /* ignore */
+          }
+        } catch (err) {
+          console.error(err)
+          statusEl.textContent = 'Error deleting'
+        }
+      }
+
+      loadBtn.addEventListener('click', loadMessages)
+      tokenEl.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') loadMessages()
+      })
+    </script>
+  </body>
+</html>

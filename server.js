@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -9,6 +10,19 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 async function createServer() {
   const app = express()
 
+  app.use(express.json())
+  app.use('/.well-known', (_req, res) => res.status(404).end())
+  app.use('/api/contact', async (req, res, next) => {
+    console.log('[api/contact] hit', req.method, req.url)
+    try {
+      const module = await import('./api/contact.js')
+      return module.default(req, res)
+    } catch (err) {
+      console.error('[api/contact] handler error', err)
+      return next(err)
+    }
+  })
+
   // Create Vite server in middleware mode and configure the app type as 'custom'
   // This disables Vite's own HTML serving logic so parent server can take control
   const vite = await createViteServer({
@@ -18,6 +32,10 @@ async function createServer() {
 
   // Use vite's connect instance as middleware
   app.use(vite.middlewares)
+
+  // Static assets should run after Vite so module/asset requests with query params
+  // (e.g. ?import) are handled by Vite instead of being served as raw files.
+  app.use(express.static(path.resolve(__dirname, 'public')))
 
   app.use('*', async (req, res, next) => {
     const url = req.originalUrl
@@ -50,6 +68,7 @@ async function createServer() {
       // 6. Send the rendered HTML back.
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
     } catch (e) {
+      console.error('SSR error', e)
       // If an error is caught, let Vite fix the stack trace so it maps back
       // to your actual source code.
       vite.ssrFixStacktrace(e)
