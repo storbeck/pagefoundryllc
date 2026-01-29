@@ -489,6 +489,11 @@ const works = [
     image: '/projects/gdotv/light.png'
   },
   {
+    title: 'G.V() Analytics Dashboard',
+    subtitle: 'Dashboard analytics screen for graph database IDE',
+    image: '/projects/gdotv/dashboard.png'
+  },
+  {
     title: 'G.V() IDE (Dark)',
     subtitle: 'High-contrast operator theme',
     image: '/projects/gdotv/dark.png'
