@@ -317,7 +317,17 @@
           >
             <SwiperSlide v-for="work in works" :key="work.title">
               <article class="work-card">
-                <div class="work-bg" :style="{ backgroundImage: `url(${work.image})` }"></div>
+                <div v-if="work.type !== 'video'" class="work-bg" :style="{ backgroundImage: `url(${work.image})` }"></div>
+                <video
+                  v-else
+                  class="work-video"
+                  :src="work.video"
+                  autoplay
+                  muted
+                  loop
+                  playsinline
+                  preload="metadata"
+                ></video>
                 <div class="work-overlay"></div>
                 <div class="work-meta overlay">
                   <div class="work-top">{{ work.title }}</div>
@@ -330,7 +340,17 @@
           </Swiper>
           <div v-else class="works-grid-fallback">
             <article v-for="work in works" :key="work.title" class="work-card fallback">
-              <div class="work-bg" :style="{ backgroundImage: `url(${work.image})` }"></div>
+              <div v-if="work.type !== 'video'" class="work-bg" :style="{ backgroundImage: `url(${work.image})` }"></div>
+              <video
+                v-else
+                class="work-video"
+                :src="work.video"
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="metadata"
+              ></video>
               <div class="work-overlay"></div>
               <div class="work-meta overlay">
                 <div class="work-top">{{ work.title }}</div>
@@ -437,6 +457,12 @@ const icons = {
 };
 
 const works = [
+  {
+    title: 'YT Pod',
+    subtitle: 'iPod-style YouTube audio player',
+    type: 'video',
+    video: '/projects/ytpod/ytpod.mov'
+  },
   {
     title: 'Vulnerability Triage',
     subtitle: 'High-signal triage workflow and evidence views',

@@ -1182,6 +1182,16 @@ a:hover {
   filter: saturate(1.02);
 }
 
+.work-video {
+  position: absolute;
+  inset: 12%;
+  width: 76%;
+  height: 76%;
+  object-fit: contain;
+  object-position: center;
+  border-radius: 16px;
+}
+
 .work-overlay {
   position: absolute;
   inset: 0;
