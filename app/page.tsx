@@ -1,7 +1,7 @@
 export default function Home() {
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex flex-col items-center gap-2 text-center sm:items-start sm:text-left">
+      <div className="flex flex-col gap-2">
         <h1 className="text-2xl font-semibold leading-8">
           Product & Frontend Engineering
         </h1>
@@ -10,7 +10,7 @@ export default function Home() {
           software on budget and on time.
         </p>
       </div>
-      <div className="flex flex-col items-center gap-2 text-center sm:items-start sm:text-left">
+      <div className="flex flex-col gap-2">
         <h2 className="text-2xl font-semibold leading-8">What I Do</h2>
         <ul className="text-lg list-disc">
           <li>Turn ambiguous product ideas into a shippable UI</li>
@@ -20,7 +20,7 @@ export default function Home() {
           <li>Establish frontend architectures that scale</li>
         </ul>
       </div>
-      <div className="flex flex-col items-center gap-2 text-center sm:items-start sm:text-left">
+      <div className="flex flex-col gap-2">
         <h2 className="text-2xl font-semibold leading-8">Who I Work With</h2>
         <ul className="text-lg list-disc">
           <li>Small teams (3-15 engineers)</li>
@@ -29,10 +29,10 @@ export default function Home() {
           <li>Companies with frontend debt slowing delivery</li>
         </ul>
       </div>
-      <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
+      <div className="flex flex-col gap-6">
         <h2 className="text-2xl font-semibold leading-8">Selected Work</h2>
         {/*  Chariot  */}
-        <div className="pl-8 border-l-3 flex flex-col gap-2">
+        <div className="pl-2 md:pl-8 border-l-3 flex flex-col gap-2">
           <div>
             <h3 className="text-xl font-semibold leading-8">
               Chariot – Offensive Security SaaS Platform
@@ -113,7 +113,7 @@ export default function Home() {
         </div>
 
         {/* Account Lifecycle Management */}
-        <div className="pl-8 border-l-3 flex flex-col gap-2">
+        <div className="pl-2 md:pl-8 border-l-3 flex flex-col gap-2">
           <div>
             <h3 className="text-xl font-semibold leading-8">
               Account Lifecycle Management – JPMorgan Chase
@@ -179,7 +179,7 @@ export default function Home() {
         </div>
 
         {/* Infrastructure & Systems Engineering Background */}
-        <div className="pl-8 border-l-3 flex flex-col gap-2">
+        <div className="pl-2 md:pl-8 border-l-3 flex flex-col gap-2">
           <div>
             <h3 className="text-xl font-semibold leading-8">
               Freelance & Embedded Consulting – PageFoundry LLC

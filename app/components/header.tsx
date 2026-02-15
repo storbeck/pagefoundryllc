@@ -14,7 +14,7 @@ export default function Header() {
             height={20}
             priority
           />
-          <h1 className="text-4xl font-semibold">PageFoundry LLC</h1>
+          <h1 className="text-xl md:text-4xl font-semibold">PageFoundry LLC</h1>
         </Link>
       </div>
       <div className="flex flex-row items-center gap-4">

@@ -1,7 +1,7 @@
 export default function Page() {
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
+      <div className="flex flex-col gap-6">
         <h1 className="text-2xl font-semibold leading-8">UX Consulting</h1>
         <p className="text-lg">
           I help teams improve the usability and structure of their existing
