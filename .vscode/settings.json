@@ -1,0 +1,8 @@
+// Disable vscode's internal CSS built-in validator
+// because we are using stylelint to better lint tailwind styles
+// such as "@theme inline" so that it doesn't produce warnings
+{
+  "css.validate": false,
+  "scss.validate": false,
+  "less.validate": false
+}
