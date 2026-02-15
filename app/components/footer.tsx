@@ -1,7 +1,9 @@
 export default function Footer() {
   return (
-    <div className="flex flex-col gap-2 mt-6 w-full">
-      <h2 className="text-2xl font-semibold leading-8">Contact</h2>
+    <div className="mt-6 flex w-full flex-col gap-2">
+      <h2 className="text-xl font-semibold leading-7 sm:text-2xl sm:leading-8">
+        Contact
+      </h2>
       <p>You can reach me via e-mail or LinkedIn, feel free to message anytime!</p>
       <p>
         Email:{" "}

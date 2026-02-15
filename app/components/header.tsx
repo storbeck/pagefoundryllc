@@ -3,38 +3,40 @@ import Link from "next/link";
 
 export default function Header() {
   return (
-    <div className="flex w-full flex-row items-center justify-center">
-      <div className="flex w-full flex-row items-center">
-        <Link href="/" className="flex w-full flex-row items-center">
+    <div className="flex w-full items-center justify-between gap-3 py-1">
+      <div className="min-w-0 flex-1">
+        <Link href="/" className="flex items-center gap-2 sm:gap-3">
           <Image
-            className="block dark:invert"
+            className="block h-12 w-12 shrink-0 dark:invert sm:h-auto sm:w-auto"
             src="/logo.png"
             alt="PageFoundry LLC"
             width={100}
-            height={20}
+            height={100}
             priority
           />
-          <h1 className="text-xl md:text-4xl font-semibold">PageFoundry LLC</h1>
+          <h1 className="truncate text-xl font-semibold leading-none sm:text-2xl md:text-4xl">
+            PageFoundry LLC
+          </h1>
         </Link>
       </div>
-      <div className="flex flex-row items-center gap-4">
+      <div className="flex shrink-0 flex-row items-center gap-2 sm:gap-4">
         <Link href="mailto:geoff@pagefoundry.dev">
           <Image
             className="block dark:invert"
             src="/email.svg"
             alt="E-Mail"
-            width={50}
-            height={50}
+            width={40}
+            height={40}
             priority
           />
         </Link>
         <Link href="https://www.linkedin.com/in/geoff-storbeck-81a25035/">
           <Image
-            className="block dark:invert"
+            className="block dark:invert-0"
             src="/linkedin.png"
             alt="LinkedIn"
-            width={50}
-            height={50}
+            width={40}
+            height={40}
             priority
           />
         </Link>

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header";
@@ -20,6 +20,12 @@ export const metadata: Metadata = {
   title: "PageFoundry LLC",
   description:
     "UI/UX frontend engineering for product teams. I build usable, production-ready interfaces and run focused UX audits to fix confusing flows.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({
@@ -44,11 +50,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-          <main className="flex min-h-screen w-full max-w-5xl flex-col items-center py-4 px-6 md:px-16 bg-white dark:bg-black sm:items-start">
+        <div className="min-h-screen bg-zinc-50 font-sans dark:bg-black">
+          <main className="mx-auto flex min-h-screen w-full max-w-5xl flex-col bg-white px-4 py-4 sm:px-6 md:px-12 dark:bg-black">
             <Header />
             <Navigation />
-            <div className="mt-10">{children}</div>
+            <div className="mt-6 w-full md:mt-10">{children}</div>
             <Footer />
           </main>
         </div>

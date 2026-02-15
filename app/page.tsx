@@ -2,17 +2,19 @@ export default function Home() {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-2">
-        <h1 className="text-2xl font-semibold leading-8">
+        <h1 className="text-xl font-semibold leading-7 sm:text-2xl sm:leading-8">
           Product & Frontend Engineering
         </h1>
-        <p className="text-lg">
+        <p className="text-base sm:text-lg">
           I help product teams ship functional, usable, and well-designed
           software on budget and on time.
         </p>
       </div>
       <div className="flex flex-col gap-2">
-        <h2 className="text-2xl font-semibold leading-8">What I Do</h2>
-        <ul className="text-lg list-disc">
+        <h2 className="text-xl font-semibold leading-7 sm:text-2xl sm:leading-8">
+          What I Do
+        </h2>
+        <ul className="list-disc space-y-1 pl-5 text-base sm:text-lg">
           <li>Turn ambiguous product ideas into a shippable UI</li>
           <li>Modernize legacy systems without spending months on a rewrite</li>
           <li>Design interfaces that reduce cognitive load</li>
@@ -21,8 +23,10 @@ export default function Home() {
         </ul>
       </div>
       <div className="flex flex-col gap-2">
-        <h2 className="text-2xl font-semibold leading-8">Who I Work With</h2>
-        <ul className="text-lg list-disc">
+        <h2 className="text-xl font-semibold leading-7 sm:text-2xl sm:leading-8">
+          Who I Work With
+        </h2>
+        <ul className="list-disc space-y-1 pl-5 text-base sm:text-lg">
           <li>Small teams (3-15 engineers)</li>
           <li>Startups post-MVP entering scale</li>
           <li>Founders who need senior execution</li>
@@ -30,14 +34,16 @@ export default function Home() {
         </ul>
       </div>
       <div className="flex flex-col gap-6">
-        <h2 className="text-2xl font-semibold leading-8">Selected Work</h2>
+        <h2 className="text-xl font-semibold leading-7 sm:text-2xl sm:leading-8">
+          Selected Work
+        </h2>
         {/*  Chariot  */}
-        <div className="pl-2 md:pl-8 border-l-3 flex flex-col gap-2">
+        <div className="flex flex-col gap-2 border-l-3 pl-3 sm:pl-5 md:pl-8">
           <div>
-            <h3 className="text-xl font-semibold leading-8">
+            <h3 className="text-lg font-semibold leading-7 sm:text-xl sm:leading-8">
               Chariot – Offensive Security SaaS Platform
             </h3>
-            <h4 className="text-lg font-semibold leading-8">
+            <h4 className="text-base font-semibold leading-7 sm:text-lg sm:leading-8">
               Staff Software Engineer, Frontend Lead
             </h4>
             <p>
@@ -49,8 +55,10 @@ export default function Home() {
               from slow monthly releases to same-day feature delivery.
             </p>
           </div>
-          <h4 className="text-lg font-semibold leading-8">Scope & Impact</h4>
-          <ul className="list-disc ml-6">
+          <h4 className="text-base font-semibold leading-7 sm:text-lg sm:leading-8">
+            Scope & Impact
+          </h4>
+          <ul className="list-disc space-y-1 pl-5">
             <li>
               Rebuilt the frontend architecture using React, TypeScript, and
               Tailwind
@@ -72,12 +80,12 @@ export default function Home() {
         </div>
 
         {/* Cassandra as a Service */}
-        <div className="pr-8 border-r-3 flex flex-col gap-2">
+        <div className="flex flex-col gap-2 border-r-3 pr-3 sm:pr-5 md:pr-8">
           <div>
-            <h3 className="text-xl font-semibold leading-8">
+            <h3 className="text-lg font-semibold leading-7 sm:text-xl sm:leading-8">
               Casssandra as a Service – JPMorgan Chase
             </h3>
-            <h4 className="text-lg font-semibold leading-8">
+            <h4 className="text-base font-semibold leading-7 sm:text-lg sm:leading-8">
               Lead UI/UX Developer
             </h4>
             <p>
@@ -89,8 +97,10 @@ export default function Home() {
               application into a standalone React/Redux system.
             </p>
           </div>
-          <h4 className="text-lg font-semibold leading-8">Scope & Impact</h4>
-          <ul className="list-disc ml-6">
+          <h4 className="text-base font-semibold leading-7 sm:text-lg sm:leading-8">
+            Scope & Impact
+          </h4>
+          <ul className="list-disc space-y-1 pl-5">
             <li>
               Rewrote legacy Angular 1.x UI into modern React architecture
             </li>
@@ -113,12 +123,12 @@ export default function Home() {
         </div>
 
         {/* Account Lifecycle Management */}
-        <div className="pl-2 md:pl-8 border-l-3 flex flex-col gap-2">
+        <div className="flex flex-col gap-2 border-l-3 pl-3 sm:pl-5 md:pl-8">
           <div>
-            <h3 className="text-xl font-semibold leading-8">
+            <h3 className="text-lg font-semibold leading-7 sm:text-xl sm:leading-8">
               Account Lifecycle Management – JPMorgan Chase
             </h3>
-            <h4 className="text-lg font-semibold leading-8">
+            <h4 className="text-base font-semibold leading-7 sm:text-lg sm:leading-8">
               Lead UI/UX Developer
             </h4>
             <p>
@@ -129,8 +139,10 @@ export default function Home() {
               led expansion as adoption scaled.
             </p>
           </div>
-          <h4 className="text-lg font-semibold leading-8">Scope & Impact</h4>
-          <ul className="list-disc ml-6">
+          <h4 className="text-base font-semibold leading-7 sm:text-lg sm:leading-8">
+            Scope & Impact
+          </h4>
+          <ul className="list-disc space-y-1 pl-5">
             <li>Designed and implemented the foundational UI framework</li>
             <li>Conducted design studios with multiple lines of business</li>
             <li>
@@ -148,12 +160,12 @@ export default function Home() {
         </div>
 
         {/* Infrastructure & Systems Engineering Background */}
-        <div className="pr-8 border-r-3 flex flex-col gap-2">
+        <div className="flex flex-col gap-2 border-r-3 pr-3 sm:pr-5 md:pr-8">
           <div>
-            <h3 className="text-xl font-semibold leading-8">
+            <h3 className="text-lg font-semibold leading-7 sm:text-xl sm:leading-8">
               Infrastructure & Systems Engineering Background
             </h3>
-            <h4 className="text-lg font-semibold leading-8">
+            <h4 className="text-base font-semibold leading-7 sm:text-lg sm:leading-8">
               Systems Administrator → Application Developer
             </h4>
             <p>
@@ -161,7 +173,7 @@ export default function Home() {
               infrastructure and systems engineering roles involving:
             </p>
           </div>
-          <ul className="list-disc ml-6">
+          <ul className="list-disc space-y-1 pl-5">
             <li>
               Cross-datacenter migrations (300+ server migrations with zero
               downtime)
@@ -179,9 +191,9 @@ export default function Home() {
         </div>
 
         {/* Infrastructure & Systems Engineering Background */}
-        <div className="pl-2 md:pl-8 border-l-3 flex flex-col gap-2">
+        <div className="flex flex-col gap-2 border-l-3 pl-3 sm:pl-5 md:pl-8">
           <div>
-            <h3 className="text-xl font-semibold leading-8">
+            <h3 className="text-lg font-semibold leading-7 sm:text-xl sm:leading-8">
               Freelance & Embedded Consulting – PageFoundry LLC
             </h3>
             <p>
@@ -190,7 +202,7 @@ export default function Home() {
             </p>
           </div>
           <p>Typical engagements include:</p>
-          <ul className="list-disc ml-6">
+          <ul className="list-disc space-y-1 pl-5">
             <li>Greenfield UI architecture</li>
             <li>Legacy refactors without rewrites</li>
             <li>Frontend performance improvements</li>

@@ -2,8 +2,12 @@
 
 @layer base {
   a {
-    @apply text-teal-800;
-    @apply dark:text-teal-300;
+    color: var(--link-color);
+    transition: color 160ms ease;
+  }
+
+  a:hover {
+    color: var(--link-hover-color);
   }
 }
 
@@ -11,6 +15,8 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --link-color: #0f766e;
+  --link-hover-color: #115e59;
 }
 
 @theme inline {
@@ -24,6 +30,8 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --link-color: #7aa2c9;
+    --link-hover-color: #9abde0;
   }
 }
 
