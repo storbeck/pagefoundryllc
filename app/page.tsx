@@ -1,65 +1,205 @@
-import Image from "next/image";
-
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <div className="flex flex-col gap-6">
+      <div className="flex flex-col items-center gap-2 text-center sm:items-start sm:text-left">
+        <h1 className="text-2xl font-semibold leading-8">
+          Product & Frontend Engineering
+        </h1>
+        <p className="text-lg">
+          I help product teams ship functional, usable, and well-designed
+          software on budget and on time.
+        </p>
+      </div>
+      <div className="flex flex-col items-center gap-2 text-center sm:items-start sm:text-left">
+        <h2 className="text-2xl font-semibold leading-8">What I Do</h2>
+        <ul className="text-lg list-disc">
+          <li>Turn ambiguous product ideas into a shippable UI</li>
+          <li>Modernize legacy systems without spending months on a rewrite</li>
+          <li>Design interfaces that reduce cognitive load</li>
+          <li>Integrate AI features safely into existing products</li>
+          <li>Establish frontend architectures that scale</li>
+        </ul>
+      </div>
+      <div className="flex flex-col items-center gap-2 text-center sm:items-start sm:text-left">
+        <h2 className="text-2xl font-semibold leading-8">Who I Work With</h2>
+        <ul className="text-lg list-disc">
+          <li>Small teams (3-15 engineers)</li>
+          <li>Startups post-MVP entering scale</li>
+          <li>Founders who need senior execution</li>
+          <li>Companies with frontend debt slowing delivery</li>
+        </ul>
+      </div>
+      <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
+        <h2 className="text-2xl font-semibold leading-8">Selected Work</h2>
+        {/*  Chariot  */}
+        <div className="pl-8 border-l-3 flex flex-col gap-2">
+          <div>
+            <h3 className="text-xl font-semibold leading-8">
+              Chariot – Offensive Security SaaS Platform
+            </h3>
+            <h4 className="text-lg font-semibold leading-8">
+              Staff Software Engineer, Frontend Lead
+            </h4>
+            <p>
+              <i>
+                Praetorian’s offensive security platform used by enterprise
+                security teams.
+              </i>
+              <br />I led the frontend rewrite of the platform, transitioning
+              from slow monthly releases to same-day feature delivery.
+            </p>
+          </div>
+          <h4 className="text-lg font-semibold leading-8">Scope & Impact</h4>
+          <ul className="list-disc ml-6">
+            <li>
+              Rebuilt the frontend architecture using React, TypeScript, and
+              Tailwind
+            </li>
+            <li>
+              Established scalable component patterns and development workflows
+            </li>
+            <li>Reduced technical debt and improved developer velocity</li>
+            <li>
+              Improved deployment cadence from monthly releases to same-day
+              shipping
+            </li>
+            <li>Contributed to cloud deployment workflows (AWS)</li>
+          </ul>
+          <p>
+            The result was a faster-moving product organization with clearer UI
+            patterns and stronger frontend foundations.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        {/* Cassandra as a Service */}
+        <div className="pr-8 border-r-3 flex flex-col gap-2">
+          <div>
+            <h3 className="text-xl font-semibold leading-8">
+              Casssandra as a Service – JPMorgan Chase
+            </h3>
+            <h4 className="text-lg font-semibold leading-8">
+              Lead UI/UX Developer
+            </h4>
+            <p>
+              <i>
+                Internal platform allowing engineers to self-provision and
+                manage Cassandra clusters.
+              </i>
+              <br />I redesigned and rebuilt the UI from an embedded Angular 1.x
+              application into a standalone React/Redux system.
+            </p>
+          </div>
+          <h4 className="text-lg font-semibold leading-8">Scope & Impact</h4>
+          <ul className="list-disc ml-6">
+            <li>
+              Rewrote legacy Angular 1.x UI into modern React architecture
+            </li>
+            <li>
+              Designed the entire user workflow around actual operator needs
+            </li>
+            <li>
+              Built a web-based cluster management tool similar to SQL Server
+              Management Studio
+            </li>
+            <li>
+              Improved performance, maintainability, and onboarding for new
+              developers
+            </li>
+          </ul>
+          <p>
+            This project required balancing enterprise constraints with
+            developer usability at firm-wide scale.
+          </p>
         </div>
-      </main>
+
+        {/* Account Lifecycle Management */}
+        <div className="pl-8 border-l-3 flex flex-col gap-2">
+          <div>
+            <h3 className="text-xl font-semibold leading-8">
+              Account Lifecycle Management – JPMorgan Chase
+            </h3>
+            <h4 className="text-lg font-semibold leading-8">
+              Lead UI/UX Developer
+            </h4>
+            <p>
+              <i>
+                Internal compliance and remediation platform used firm-wide.
+              </i>
+              <br />I built the initial MVP that went to production and later
+              led expansion as adoption scaled.
+            </p>
+          </div>
+          <h4 className="text-lg font-semibold leading-8">Scope & Impact</h4>
+          <ul className="list-disc ml-6">
+            <li>Designed and implemented the foundational UI framework</li>
+            <li>Conducted design studios with multiple lines of business</li>
+            <li>
+              Onboarded additional developers and standardized frontend patterns
+            </li>
+            <li>
+              Maintained and supported multiple production applications
+              simultaneously
+            </li>
+          </ul>
+          <p>
+            This work required strong stakeholder management and cross-team
+            coordination.
+          </p>
+        </div>
+
+        {/* Infrastructure & Systems Engineering Background */}
+        <div className="pr-8 border-r-3 flex flex-col gap-2">
+          <div>
+            <h3 className="text-xl font-semibold leading-8">
+              Infrastructure & Systems Engineering Background
+            </h3>
+            <h4 className="text-lg font-semibold leading-8">
+              Systems Administrator → Application Developer
+            </h4>
+            <p>
+              Before focusing exclusively on frontend, I worked in
+              infrastructure and systems engineering roles involving:
+            </p>
+          </div>
+          <ul className="list-disc ml-6">
+            <li>
+              Cross-datacenter migrations (300+ server migrations with zero
+              downtime)
+            </li>
+            <li>Designing a LiveCD-based server duplication system</li>
+            <li>
+              Implementing IDS systems and vulnerability mitigation workflows
+            </li>
+            <li>Writing custom scaling algorithms for partition management</li>
+          </ul>
+          <p>
+            This foundation influences how I design software today: with
+            operational awareness and long-term maintainability in mind.
+          </p>
+        </div>
+
+        {/* Infrastructure & Systems Engineering Background */}
+        <div className="pl-8 border-l-3 flex flex-col gap-2">
+          <div>
+            <h3 className="text-xl font-semibold leading-8">
+              Freelance & Embedded Consulting – PageFoundry LLC
+            </h3>
+            <p>
+              I now partner with startups and small teams as an embedded senior
+              frontend engineer.
+            </p>
+          </div>
+          <p>Typical engagements include:</p>
+          <ul className="list-disc ml-6">
+            <li>Greenfield UI architecture</li>
+            <li>Legacy refactors without rewrites</li>
+            <li>Frontend performance improvements</li>
+            <li>AI feature integration</li>
+            <li>Developer workflow optimization</li>
+          </ul>
+          <p>I embed directly with teams and ship production code.</p>
+        </div>
+      </div>
     </div>
   );
 }

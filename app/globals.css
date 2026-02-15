@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@layer base {
+  a {
+    @apply text-teal-800;
+    @apply dark:text-teal-300;
+  }
+}
+
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
