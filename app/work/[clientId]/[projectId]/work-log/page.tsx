@@ -13,6 +13,21 @@ function formatWorkDate(date: Date): string {
   return date.toISOString().slice(0, 10);
 }
 
+function utcDay(date: Date): Date {
+  return new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
+}
+
+function addDays(date: Date, days: number): Date {
+  const clone = new Date(date);
+  clone.setUTCDate(clone.getUTCDate() + days);
+  return clone;
+}
+
+function isWeekday(date: Date): boolean {
+  const day = date.getUTCDay();
+  return day !== 0 && day !== 6;
+}
+
 export default async function WorkLogPage({
   params,
 }: {
@@ -33,15 +48,47 @@ export default async function WorkLogPage({
     select: { id: true, workDate: true, hours: true, notes: true, updatedAt: true },
   });
 
-  const tableRows = entries.map((entry) => ({
-    id: entry.id,
-    workDate: formatWorkDate(entry.workDate),
-    hours: entry.hours.toString(),
-    notes: entry.notes ?? "",
-    updatedAt: entry.updatedAt.toISOString(),
-  }));
+  const today = utcDay(new Date());
+  const rowsByDate = new Map(
+    entries.map((entry) => [
+      formatWorkDate(entry.workDate),
+      {
+        id: entry.id,
+        workDate: formatWorkDate(entry.workDate),
+        hours: entry.hours.toString(),
+        notes: entry.notes ?? "",
+        updatedAt: entry.updatedAt.toISOString(),
+        isPlaceholder: false,
+      },
+    ]),
+  );
 
-  async function createEntryAction(formData: FormData) {
+  const latestEntryDate = entries[0]?.workDate ? utcDay(entries[0].workDate) : null;
+  if (latestEntryDate) {
+    for (
+      let cursor = addDays(latestEntryDate, 1);
+      cursor.getTime() <= today.getTime();
+      cursor = addDays(cursor, 1)
+    ) {
+      if (!isWeekday(cursor)) continue;
+      const key = formatWorkDate(cursor);
+      if (rowsByDate.has(key)) continue;
+      rowsByDate.set(key, {
+        id: `placeholder-${key}`,
+        workDate: key,
+        hours: "",
+        notes: "",
+        updatedAt: "",
+        isPlaceholder: true,
+      });
+    }
+  }
+
+  const tableRows = [...rowsByDate.values()].sort((a, b) =>
+    a.workDate < b.workDate ? 1 : -1,
+  );
+
+  async function saveEntryAction(formData: FormData) {
     "use server";
 
     const user = await requireUser();
@@ -57,17 +104,13 @@ export default async function WorkLogPage({
     const hoursText = String(formData.get("hours") || "").trim();
     const notesText = String(formData.get("notes") || "").trim();
 
-    if (!workDateText || !hoursText) {
-      throw new Error("Date and hours are required.");
-    }
-
     const workDate = parseWorkDate(workDateText);
     if (!workDate) {
       throw new Error(`Invalid date: ${workDateText}`);
     }
 
-    const hours = Number(hoursText);
-    if (!Number.isFinite(hours) || hours <= 0) {
+    const hours = hoursText === "" ? 0 : Number(hoursText);
+    if (!Number.isFinite(hours) || hours < 0) {
       throw new Error(`Invalid hours: ${hoursText}`);
     }
 
@@ -86,7 +129,8 @@ export default async function WorkLogPage({
     });
 
     revalidatePath(`/work/${clientId}/${projectId}/work-log`);
+    return { saved: true };
   }
 
-  return <WorkLogTable rows={tableRows} onCreateEntry={createEntryAction} />;
+  return <WorkLogTable rows={tableRows} onSaveEntry={saveEntryAction} />;
 }
