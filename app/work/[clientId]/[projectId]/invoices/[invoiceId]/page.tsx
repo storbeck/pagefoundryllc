@@ -91,17 +91,26 @@ export default async function InvoiceDetailPage({
 
   if (!invoice) return <div className="p-6">Invoice not found.</div>;
 
-  const entries = await prisma.dailyLogEntry.findMany({
-    where: { projectId },
+  const linkedEntries = await prisma.dailyLogEntry.findMany({
+    where: { projectId, invoiceId: invoice.id },
     select: { workDate: true, hours: true },
   });
 
-  const hours = entries.reduce((sum, entry) => {
-    if (!isInRange(entry.workDate, invoice.payPeriod.startDate, invoice.payPeriod.endDate)) {
-      return sum;
-    }
-    return sum + Number(entry.hours);
-  }, 0);
+  const hours = linkedEntries.length
+    ? linkedEntries.reduce((sum, entry) => sum + Number(entry.hours), 0)
+    : (
+        await prisma.dailyLogEntry.findMany({
+          where: { projectId },
+          select: { workDate: true, hours: true },
+        })
+      ).reduce((sum, entry) => {
+        if (
+          !isInRange(entry.workDate, invoice.payPeriod.startDate, invoice.payPeriod.endDate)
+        ) {
+          return sum;
+        }
+        return sum + Number(entry.hours);
+      }, 0);
 
   const rate =
     invoice.project.hourlyRate != null

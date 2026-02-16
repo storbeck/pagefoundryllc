@@ -88,6 +88,7 @@ model DailyLogEntry {
   id          String  @id @default(cuid())
   projectId   String
   payPeriodId String?
+  invoiceId   String?
 
   workDate DateTime
 
@@ -99,9 +100,11 @@ model DailyLogEntry {
 
   project   Project    @relation(fields: [projectId], references: [id], onDelete: Restrict)
   payPeriod PayPeriod? @relation(fields: [payPeriodId], references: [id], onDelete: Restrict)
+  invoice   Invoice?   @relation(fields: [invoiceId], references: [id], onDelete: SetNull)
 
   @@unique([projectId, workDate])
   @@index([payPeriodId])
+  @@index([invoiceId])
   @@index([projectId, workDate])
 }
 
@@ -130,6 +133,7 @@ model Invoice {
   client    Client    @relation(fields: [clientId], references: [id], onDelete: Restrict)
   project   Project   @relation(fields: [projectId], references: [id], onDelete: Restrict)
   payPeriod PayPeriod @relation(fields: [payPeriodId], references: [id], onDelete: Restrict)
+  entries   DailyLogEntry[]
 
   @@unique([clientId, invoiceNo])
   @@index([clientId, status, sentAt])

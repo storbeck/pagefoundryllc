@@ -19,19 +19,31 @@ export type InvoiceRow = {
   sentAt: string;
   paidAt: string;
   notes: string;
+  isPrepared?: boolean;
+  unclaimedEntries?: {
+    id: string;
+    workDate: string;
+    hours: string;
+    notes: string;
+  }[];
 };
 
 type InvoicesTableProps = {
   rows: InvoiceRow[];
   onUpdateInvoice: (formData: FormData) => Promise<{ message: string }>;
+  onCreateInvoice: (formData: FormData) => Promise<{ message: string }>;
 };
 
 export default function InvoicesTable({
   rows,
   onUpdateInvoice,
+  onCreateInvoice,
 }: InvoicesTableProps) {
   const dialogRef = useRef<HTMLDialogElement | null>(null);
+  const createDialogRef = useRef<HTMLDialogElement | null>(null);
   const [active, setActive] = useState<InvoiceRow | null>(null);
+  const [prepared, setPrepared] = useState<InvoiceRow | null>(null);
+  const [selectedEntryIds, setSelectedEntryIds] = useState<string[]>([]);
   const [toast, setToast] = useState<{
     visible: boolean;
     message: string;
@@ -50,8 +62,18 @@ export default function InvoicesTable({
     dialogRef.current?.showModal();
   }
 
+  function openCreate(row: InvoiceRow) {
+    setPrepared(row);
+    setSelectedEntryIds([]);
+    createDialogRef.current?.showModal();
+  }
+
   function closeEditor() {
     dialogRef.current?.close();
+  }
+
+  function closeCreate() {
+    createDialogRef.current?.close();
   }
 
   function closeToast() {
@@ -67,6 +89,35 @@ export default function InvoicesTable({
       } catch (error) {
         const message =
           error instanceof Error ? error.message : "Failed to update invoice.";
+        setToast({ visible: true, message, tone: "error" });
+      }
+    });
+  }
+
+  function toggleEntry(id: string, checked: boolean) {
+    setSelectedEntryIds((prev) => {
+      if (checked) {
+        if (prev.includes(id)) return prev;
+        return [...prev, id];
+      }
+      return prev.filter((value) => value !== id);
+    });
+  }
+
+  function submitCreate() {
+    if (!prepared) return;
+    startTransition(async () => {
+      try {
+        const formData = new FormData();
+        for (const id of selectedEntryIds) {
+          formData.append("entryIds", id);
+        }
+        const result = await onCreateInvoice(formData);
+        setToast({ visible: true, message: result.message, tone: "success" });
+        closeCreate();
+      } catch (error) {
+        const message =
+          error instanceof Error ? error.message : "Failed to create invoice.";
         setToast({ visible: true, message, tone: "error" });
       }
     });
@@ -103,11 +154,13 @@ export default function InvoicesTable({
             ) : (
               rows.map((row) => (
                 <tr key={row.payPeriodId} className="align-top">
-                  <td className="border-b px-3 py-2">
+                  <td className={`border-b px-3 py-2 ${row.isPrepared ? "font-semibold" : ""}`}>
                     {row.periodStart} - {row.periodEnd}
                   </td>
                   <td className="border-b px-3 py-2">
-                    {row.invoiceId && row.invoiceNo ? (
+                    {row.isPrepared ? (
+                      `${row.invoiceNo} (prepared)`
+                    ) : row.invoiceId && row.invoiceNo ? (
                       <Link
                         className="underline hover:no-underline"
                         href={row.detailHref}
@@ -122,13 +175,23 @@ export default function InvoicesTable({
                   <td className="border-b px-3 py-2">{row.amount}</td>
                   <td className="border-b px-3 py-2">{row.sentAt || "-"}</td>
                   <td className="border-b px-3 py-2">
-                    <button
-                      type="button"
-                      className="border px-2 py-1 text-xs hover:bg-neutral-50 dark:hover:bg-neutral-800"
-                      onClick={() => openEditor(row)}
-                    >
-                      Edit
-                    </button>
+                    {row.isPrepared ? (
+                      <button
+                        type="button"
+                        className="border bg-black px-2 py-1 text-xs text-white hover:opacity-90"
+                        onClick={() => openCreate(row)}
+                      >
+                        Create Invoice
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        className="border px-2 py-1 text-xs hover:bg-neutral-50 dark:hover:bg-neutral-800"
+                        onClick={() => openEditor(row)}
+                      >
+                        Edit
+                      </button>
+                    )}
                   </td>
                 </tr>
               ))
@@ -136,6 +199,85 @@ export default function InvoicesTable({
           </tbody>
         </table>
       </div>
+
+      <AnchoredDialog ref={createDialogRef} width="xl">
+        {prepared ? (
+          <div className="flex flex-col gap-4 p-5">
+            <div className="text-base font-semibold">
+              Create Invoice {prepared.invoiceNo}
+            </div>
+            <p className="text-sm text-neutral-700">
+              Select the unclaimed work-log entries to include in this invoice.
+            </p>
+
+            <div className="max-h-[65vh] overflow-auto border">
+              <table className="min-w-full border-collapse text-sm">
+                <thead>
+                  <tr className="bg-neutral-50 text-left">
+                    <th className="border-b px-3 py-2 font-medium w-[48px]">
+                      <input
+                        type="checkbox"
+                        checked={
+                          (prepared.unclaimedEntries?.length ?? 0) > 0 &&
+                          selectedEntryIds.length ===
+                            (prepared.unclaimedEntries?.length ?? 0)
+                        }
+                        onChange={(event) =>
+                          setSelectedEntryIds(
+                            event.target.checked
+                              ? prepared.unclaimedEntries?.map((entry) => entry.id) ?? []
+                              : [],
+                          )
+                        }
+                      />
+                    </th>
+                    <th className="border-b px-3 py-2 font-medium">Date</th>
+                    <th className="border-b px-3 py-2 font-medium">Hours</th>
+                    <th className="border-b px-3 py-2 font-medium">Notes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {prepared.unclaimedEntries?.map((entry) => (
+                    <tr key={entry.id} className="align-top">
+                      <td className="border-b px-3 py-2">
+                        <input
+                          type="checkbox"
+                          checked={selectedEntryIds.includes(entry.id)}
+                          onChange={(event) =>
+                            toggleEntry(entry.id, event.target.checked)
+                          }
+                        />
+                      </td>
+                      <td className="border-b px-3 py-2">{entry.workDate}</td>
+                      <td className="border-b px-3 py-2">{entry.hours}</td>
+                      <td className="border-b px-3 py-2">{entry.notes}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <div className="flex justify-end gap-2">
+              <button
+                type="button"
+                className="border px-3 py-2 text-sm"
+                onClick={closeCreate}
+                disabled={isPending}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                className="dark:bg-white dark:text-black bg-black px-3 py-2 text-sm text-white disabled:opacity-60"
+                onClick={submitCreate}
+                disabled={isPending || selectedEntryIds.length === 0}
+              >
+                {isPending ? "Creating..." : "Create Invoice"}
+              </button>
+            </div>
+          </div>
+        ) : null}
+      </AnchoredDialog>
 
       <AnchoredDialog ref={dialogRef} width="lg">
         {active ? (
