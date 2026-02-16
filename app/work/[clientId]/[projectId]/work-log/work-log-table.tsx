@@ -78,10 +78,10 @@ export default function WorkLogTable({
                   <td className="border-b px-3 py-2">
                     <button
                       type="button"
-                      className="border px-2 py-1 text-xs hover:bg-neutral-50"
+                      className="border px-2 py-1 text-xs hover:bg-neutral-50 dark:hover:bg-neutral-800"
                       onClick={() => openEditor(row)}
                     >
-                      Edit Row
+                      Edit
                     </button>
                   </td>
                 </tr>

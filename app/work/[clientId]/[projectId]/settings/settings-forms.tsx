@@ -80,7 +80,7 @@ export default function SettingsForms({
       />
 
       <div className="grid gap-4 md:grid-cols-2">
-        <section className="p-4">
+        <section>
           <h2 className="mb-4 text-base font-semibold">Client Settings</h2>
           <form action={saveClient} className="space-y-3">
             <label className="flex flex-col gap-1">
