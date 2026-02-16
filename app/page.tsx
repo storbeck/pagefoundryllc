@@ -8,8 +8,8 @@ export default function Home() {
           Product & Frontend Engineering
         </h1>
         <p className="text-base sm:text-lg">
-          I help product teams ship functional, usable, and well-designed
-          software on budget and on time.
+          I help SaaS teams modernize messy frontends and clarify UX so
+          customers actually understand the product.
         </p>
       </div>
       <div className="flex flex-col gap-2">
@@ -34,7 +34,6 @@ export default function Home() {
             <li>Companies with frontend debt slowing delivery</li>
           </ul>
         </Paragraph>
-        
       </div>
       <div className="flex flex-col gap-6">
         <Paragraph title="Selected Work">
@@ -65,7 +64,8 @@ export default function Home() {
                 Tailwind
               </li>
               <li>
-                Established scalable component patterns and development workflows
+                Established scalable component patterns and development
+                workflows
               </li>
               <li>Reduced technical debt and improved developer velocity</li>
               <li>
@@ -75,8 +75,8 @@ export default function Home() {
               <li>Contributed to cloud deployment workflows (AWS)</li>
             </ul>
             <p>
-              The result was a faster-moving product organization with clearer UI
-              patterns and stronger frontend foundations.
+              The result was a faster-moving product organization with clearer
+              UI patterns and stronger frontend foundations.
             </p>
           </div>
 
@@ -94,8 +94,8 @@ export default function Home() {
                   Internal platform allowing engineers to self-provision and
                   manage Cassandra clusters.
                 </i>
-                <br />I redesigned and rebuilt the UI from an embedded Angular 1.x
-                application into a standalone React/Redux system.
+                <br />I redesigned and rebuilt the UI from an embedded Angular
+                1.x application into a standalone React/Redux system.
               </p>
             </div>
             <h4 className="text-base font-semibold leading-7 sm:text-lg sm:leading-8">
@@ -147,7 +147,8 @@ export default function Home() {
               <li>Designed and implemented the foundational UI framework</li>
               <li>Conducted design studios with multiple lines of business</li>
               <li>
-                Onboarded additional developers and standardized frontend patterns
+                Onboarded additional developers and standardized frontend
+                patterns
               </li>
               <li>
                 Maintained and supported multiple production applications
@@ -183,7 +184,9 @@ export default function Home() {
               <li>
                 Implementing IDS systems and vulnerability mitigation workflows
               </li>
-              <li>Writing custom scaling algorithms for partition management</li>
+              <li>
+                Writing custom scaling algorithms for partition management
+              </li>
             </ul>
             <p>
               This foundation influences how I design software today: with
@@ -198,8 +201,8 @@ export default function Home() {
                 Freelance & Embedded Consulting – PageFoundry LLC
               </h3>
               <p>
-                I now partner with startups and small teams as an embedded senior
-                frontend engineer.
+                I now partner with startups and small teams as an embedded
+                senior frontend engineer.
               </p>
             </div>
             <p>Typical engagements include:</p>
@@ -213,7 +216,6 @@ export default function Home() {
             <p>I embed directly with teams and ship production code.</p>
           </div>
         </Paragraph>
-        
       </div>
     </div>
   );
