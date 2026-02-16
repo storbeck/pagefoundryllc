@@ -3,11 +3,11 @@ import type { NextRequest } from "next/server";
 
 const SESSION_COOKIE = "pf_session";
 
-// Protect everything under /app
+// Protect everything under /work
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  if (pathname.startsWith("/app")) {
+  if (pathname.startsWith("/work")) {
     const token = req.cookies.get(SESSION_COOKIE)?.value;
     if (!token) {
       const url = req.nextUrl.clone();
@@ -21,5 +21,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/app/:path*"],
+  matcher: ["/work/:path*"],
 };

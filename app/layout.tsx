@@ -5,6 +5,7 @@ import Header from "@/components/header";
 import Navigation from "./components/navigation";
 import Footer from "./components/footer";
 import Script from "next/script";
+import { getCurrentUser } from "@/lib/auth";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,6 +34,9 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const user = await getCurrentUser();
+  const isLoggedIn = !!user;
+
   return (
     <html lang="en">
       <Script
@@ -51,10 +55,14 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <div className="min-h-screen bg-zinc-50 font-sans dark:bg-black">
-          <main className="mx-auto flex min-h-screen w-full max-w-5xl flex-col bg-white px-4 py-4 sm:px-6 md:px-12 dark:bg-black">
+          <main
+            className={`flex min-h-screen mx-auto w-full max-w-5xl flex-col bg-white p-4 sm:px-6 md:px-12 dark:bg-black`}
+          >
             <Header />
             <Navigation />
-            <div className="mt-6 w-full md:mt-10">{children}</div>
+            <div className={`${!isLoggedIn ? "mt-6 md:mt-10" : "mt-4"} w-full`}>
+              {children}
+            </div>
             <Footer />
           </main>
         </div>

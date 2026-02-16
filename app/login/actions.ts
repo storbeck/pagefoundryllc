@@ -22,5 +22,5 @@ export async function loginAction(formData: FormData): Promise<void> {
   if (!ok) redirect("/login?error=invalid");
 
   await createSession(user.id);
-  redirect("/app");
+  redirect("/work");
 }
