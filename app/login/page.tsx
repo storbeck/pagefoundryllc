@@ -17,7 +17,7 @@ export default async function LoginPage({
 
   return (
     <div className="flex items-center justify-center p-6">
-      <div className="w-full max-w-sm rounded-xl border p-6">
+      <div className="w-full max-w-sm border p-6">
         <h1 className="text-xl font-semibold">Sign in</h1>
 
         {error ? (
@@ -33,7 +33,7 @@ export default async function LoginPage({
               name="email"
               type="email"
               autoComplete="email"
-              className="rounded-md border px-3 py-2"
+              className="border px-3 py-2"
               required
             />
           </label>
@@ -44,7 +44,7 @@ export default async function LoginPage({
               name="password"
               type="password"
               autoComplete="current-password"
-              className="rounded-md border px-3 py-2"
+              className="border px-3 py-2"
               required
             />
           </label>
