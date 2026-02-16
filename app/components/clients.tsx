@@ -8,10 +8,12 @@ export default function Clients({
   clients,
   projectsByClient,
   createClientAction,
+  createProjectAction,
 }: {
   clients: { id: string; name: string }[];
   projectsByClient: Record<string, { id: string; name: string }[]>;
   createClientAction: (formData: FormData) => void | Promise<void>;
+  createProjectAction: (formData: FormData) => void | Promise<void>;
 }) {
   const router = useRouter();
   const params = useParams<{ clientId?: string; projectId?: string }>();
@@ -20,7 +22,8 @@ export default function Clients({
     typeof params.projectId === "string" ? params.projectId : "";
   const projects = clientId ? projectsByClient[clientId] ?? [] : [];
   const selectedProjectId = projectId || projects[0]?.id || "";
-  const dialogRef = useRef<HTMLDialogElement | null>(null);
+  const clientDialogRef = useRef<HTMLDialogElement | null>(null);
+  const projectDialogRef = useRef<HTMLDialogElement | null>(null);
 
   function onClientChange(e: React.ChangeEvent<HTMLSelectElement>) {
     const value = e.target.value;
@@ -63,6 +66,14 @@ export default function Clients({
         </select>
       </label>
 
+      <button
+        type="button"
+        className="bg-black p-3 text-sm text-white dark:invert"
+        onClick={() => clientDialogRef.current?.showModal()}
+      >
+        New Client
+      </button>
+
       <label className="flex min-w-56 flex-1 flex-col gap-1">
         <span className="text-sm">Project</span>
         <select
@@ -85,12 +96,13 @@ export default function Clients({
       <button
         type="button"
         className="bg-black p-3 text-sm text-white dark:invert"
-        onClick={() => dialogRef.current?.showModal()}
+        onClick={() => projectDialogRef.current?.showModal()}
+        disabled={!clientId}
       >
-        New Client
+        New Project
       </button>
 
-      <AnchoredDialog ref={dialogRef} width="md">
+      <AnchoredDialog ref={clientDialogRef} width="md">
         <form action={createClientAction} className="flex flex-col gap-4 p-5">
           <div className="text-base font-semibold">Create Client</div>
 
@@ -117,7 +129,38 @@ export default function Clients({
             <button
               type="button"
               className="border px-3 py-2 text-sm"
-              onClick={() => dialogRef.current?.close()}
+              onClick={() => clientDialogRef.current?.close()}
+            >
+              Cancel
+            </button>
+            <button className="dark:bg-white dark:text-black bg-black px-3 py-2 text-sm text-white">
+              Create
+            </button>
+          </div>
+        </form>
+      </AnchoredDialog>
+
+      <AnchoredDialog ref={projectDialogRef} width="md">
+        <form action={createProjectAction} className="flex flex-col gap-4 p-5">
+          <div className="text-base font-semibold">Create Project</div>
+
+          <input type="hidden" name="clientId" value={clientId} />
+
+          <label className="flex flex-col gap-1">
+            <span className="text-sm">Project name</span>
+            <input
+              name="name"
+              className="border px-3 py-2"
+              placeholder="e.g. Website Refresh"
+              required
+            />
+          </label>
+
+          <div className="flex justify-end gap-2">
+            <button
+              type="button"
+              className="border px-3 py-2 text-sm"
+              onClick={() => projectDialogRef.current?.close()}
             >
               Cancel
             </button>

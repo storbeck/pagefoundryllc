@@ -50,11 +50,39 @@ export default async function Header() {
     redirect(`/work/${client.id}/${project.id}`);
   }
 
+  async function createProjectAction(formData: FormData) {
+    "use server";
+
+    const user = await requireUser();
+    const clientId = String(formData.get("clientId") || "");
+    const name = String(formData.get("name") || "").trim();
+    if (!clientId || !name) return;
+
+    const client = await prisma.client.findFirst({
+      where: { id: clientId, ownerId: user.id },
+      select: { id: true },
+    });
+    if (!client) return;
+
+    const project = await prisma.project.create({
+      data: {
+        ownerId: user.id,
+        clientId,
+        name,
+      },
+      select: { id: true },
+    });
+
+    revalidatePath("/work");
+    redirect(`/work/${clientId}/${project.id}`);
+  }
+
   return (
     <Clients
       clients={clients}
       projectsByClient={projectsByClient}
       createClientAction={createClientAction}
+      createProjectAction={createProjectAction}
     />
   );
 }
