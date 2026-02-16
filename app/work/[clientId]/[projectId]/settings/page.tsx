@@ -22,6 +22,7 @@ export default async function SettingsPage({
       client: {
         select: {
           id: true,
+          name: true,
           contactName: true,
           contactEmail: true,
           addressLine1: true,
@@ -43,14 +44,18 @@ export default async function SettingsPage({
     });
     if (!owned) throw new Error("Project not found");
 
+    const name = String(formData.get("name") || "").trim();
     const contactName = String(formData.get("contactName") || "").trim();
     const contactEmail = String(formData.get("contactEmail") || "").trim();
     const addressLine1 = String(formData.get("addressLine1") || "").trim();
     const addressLine2 = String(formData.get("addressLine2") || "").trim();
 
+    if (!name) throw new Error("Company name is required.");
+
     await prisma.client.update({
       where: { id: owned.clientId },
       data: {
+        name,
         contactName: contactName || null,
         contactEmail: contactEmail || null,
         addressLine1: addressLine1 || null,
@@ -102,6 +107,7 @@ export default async function SettingsPage({
   return (
     <SettingsForms
       client={{
+        name: project.client.name,
         contactName: project.client.contactName ?? "",
         contactEmail: project.client.contactEmail ?? "",
         addressLine1: project.client.addressLine1 ?? "",

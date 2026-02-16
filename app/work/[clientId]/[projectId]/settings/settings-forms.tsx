@@ -5,6 +5,7 @@ import FloatingMessage from "@/components/floating-message";
 
 type SettingsFormsProps = {
   client: {
+    name: string;
     contactName: string;
     contactEmail: string;
     addressLine1: string;
@@ -83,6 +84,11 @@ export default function SettingsForms({
         <section>
           <h2 className="mb-4 text-base font-semibold">Client Settings</h2>
           <form action={saveClient} className="space-y-3">
+            <label className="flex flex-col gap-1">
+              <span className="text-sm">Company name</span>
+              <input name="name" defaultValue={client.name} className="border px-3 py-2" />
+            </label>
+
             <label className="flex flex-col gap-1">
               <span className="text-sm">Contact name</span>
               <input

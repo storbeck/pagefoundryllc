@@ -96,6 +96,7 @@ export default async function InvoicesPage({
     return {
       payPeriodId: period.id,
       invoiceId: period.invoice?.id ?? "",
+      detailHref: `/work/${clientId}/${projectId}/invoices/${period.invoice?.id ?? ""}`,
       periodStart: formatDate(period.startDate),
       periodEnd: formatDate(period.endDate),
       invoiceNo: period.invoice?.invoiceNo ?? "",

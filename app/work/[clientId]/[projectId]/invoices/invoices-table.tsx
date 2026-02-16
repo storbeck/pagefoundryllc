@@ -1,12 +1,14 @@
 "use client";
 
 import { useMemo, useRef, useState, useTransition } from "react";
+import Link from "next/link";
 import AnchoredDialog from "@/components/anchored-dialog";
 import FloatingMessage from "@/components/floating-message";
 
 export type InvoiceRow = {
   payPeriodId: string;
   invoiceId: string;
+  detailHref: string;
   periodStart: string;
   periodEnd: string;
   invoiceNo: string;
@@ -104,7 +106,18 @@ export default function InvoicesTable({
                   <td className="border-b px-3 py-2">
                     {row.periodStart} - {row.periodEnd}
                   </td>
-                  <td className="border-b px-3 py-2">{row.invoiceNo || "-"}</td>
+                  <td className="border-b px-3 py-2">
+                    {row.invoiceId && row.invoiceNo ? (
+                      <Link
+                        className="underline hover:no-underline"
+                        href={row.detailHref}
+                      >
+                        {row.invoiceNo}
+                      </Link>
+                    ) : (
+                      row.invoiceNo || "-"
+                    )}
+                  </td>
                   <td className="border-b px-3 py-2">{row.hours}</td>
                   <td className="border-b px-3 py-2">{row.amount}</td>
                   <td className="border-b px-3 py-2">{row.sentAt || "-"}</td>

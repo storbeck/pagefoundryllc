@@ -30,11 +30,14 @@ function isWeekday(date: Date): boolean {
 
 export default async function WorkLogPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ clientId: string; projectId: string }>;
+  searchParams: Promise<{ page?: string }>;
 }) {
   const user = await requireUser();
   const { clientId, projectId } = await params;
+  const { page } = await searchParams;
 
   const project = await prisma.project.findFirst({
     where: { id: projectId, clientId, ownerId: user.id },
@@ -87,6 +90,14 @@ export default async function WorkLogPage({
   const tableRows = [...rowsByDate.values()].sort((a, b) =>
     a.workDate < b.workDate ? 1 : -1,
   );
+  const pageSize = 20;
+  const rawPage = Number(page ?? "1");
+  const safePage = Number.isFinite(rawPage) && rawPage > 0 ? Math.floor(rawPage) : 1;
+  const totalRows = tableRows.length;
+  const totalPages = Math.max(1, Math.ceil(totalRows / pageSize));
+  const currentPage = Math.min(safePage, totalPages);
+  const start = (currentPage - 1) * pageSize;
+  const pagedRows = tableRows.slice(start, start + pageSize);
 
   async function saveEntryAction(formData: FormData) {
     "use server";
@@ -132,5 +143,16 @@ export default async function WorkLogPage({
     return { saved: true };
   }
 
-  return <WorkLogTable rows={tableRows} onSaveEntry={saveEntryAction} />;
+  return (
+    <WorkLogTable
+      rows={pagedRows}
+      onSaveEntry={saveEntryAction}
+      pagination={{
+        currentPage,
+        totalPages,
+        totalRows,
+        pageSize,
+      }}
+    />
+  );
 }

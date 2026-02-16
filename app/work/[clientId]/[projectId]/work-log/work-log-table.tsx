@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, useTransition } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import AnchoredDialog from "@/components/anchored-dialog";
 
 type WorkLogTableProps = {
@@ -14,18 +14,34 @@ type WorkLogTableProps = {
     isPlaceholder: boolean;
   }[];
   onSaveEntry: (formData: FormData) => Promise<{ saved: boolean }>;
+  pagination: {
+    currentPage: number;
+    totalPages: number;
+    totalRows: number;
+    pageSize: number;
+  };
 };
 
 export default function WorkLogTable({
   rows,
   onSaveEntry,
+  pagination,
 }: WorkLogTableProps) {
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const dialogRef = useRef<HTMLDialogElement | null>(null);
   const formRef = useRef<HTMLFormElement | null>(null);
   const [activeRow, setActiveRow] = useState<WorkLogTableProps["rows"][number] | null>(null);
   const [message, setMessage] = useState("");
   const [isPending, startTransition] = useTransition();
+
+  function goToPage(page: number) {
+    const next = Math.max(1, Math.min(page, pagination.totalPages));
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("page", String(next));
+    router.push(`${pathname}?${params.toString()}`);
+  }
 
   function openEditor(row: WorkLogTableProps["rows"][number]) {
     setActiveRow(row);
@@ -90,6 +106,32 @@ export default function WorkLogTable({
           </tbody>
         </table>
       </div>
+
+      {pagination.totalPages > 1 ? (
+        <div className="flex items-center justify-between gap-3 text-sm">
+          <div className="text-neutral-600">
+            Page {pagination.currentPage} of {pagination.totalPages} ({pagination.totalRows} rows)
+          </div>
+          <div className="flex gap-2">
+            <button
+              type="button"
+              className="border px-2 py-1 disabled:opacity-50"
+              onClick={() => goToPage(pagination.currentPage - 1)}
+              disabled={pagination.currentPage <= 1}
+            >
+              Previous
+            </button>
+            <button
+              type="button"
+              className="border px-2 py-1 disabled:opacity-50"
+              onClick={() => goToPage(pagination.currentPage + 1)}
+              disabled={pagination.currentPage >= pagination.totalPages}
+            >
+              Next
+            </button>
+          </div>
+        </div>
+      ) : null}
 
       {message ? <p className="text-sm text-neutral-700">{message}</p> : null}
 

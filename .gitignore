@@ -2,7 +2,7 @@
 .env
 /generated
 docker-compose.yml
-/scripts/*
+/seeds/*
 *.dump
 
 # dependencies
