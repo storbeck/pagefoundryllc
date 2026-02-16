@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { useParams, useRouter } from "next/navigation";
+import AnchoredDialog from "@/components/anchored-dialog";
 
 export default function Clients({
   clients,
@@ -89,7 +90,7 @@ export default function Clients({
         New Client
       </button>
 
-      <dialog ref={dialogRef} className="w-full max-w-md rounded-lg p-0">
+      <AnchoredDialog ref={dialogRef} width="md">
         <form action={createClientAction} className="flex flex-col gap-4 p-5">
           <div className="text-base font-semibold">Create Client</div>
 
@@ -120,12 +121,12 @@ export default function Clients({
             >
               Cancel
             </button>
-            <button className="bg-black px-3 py-2 text-sm text-white">
+            <button className="dark:bg-white dark:text-black bg-black px-3 py-2 text-sm text-white">
               Create
             </button>
           </div>
         </form>
-      </dialog>
+      </AnchoredDialog>
     </div>
   );
 }
