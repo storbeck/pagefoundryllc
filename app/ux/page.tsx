@@ -1,4 +1,14 @@
+import type { Metadata } from "next";
 import Paragraph from "../components/paragraph";
+
+export const metadata: Metadata = {
+  title: "UX Consulting for SaaS Teams",
+  description:
+    "UX consulting focused on product usability, information hierarchy, and practical improvements that teams can ship quickly.",
+  alternates: {
+    canonical: "/ux",
+  },
+};
 
 export default function Page() {
   return (

@@ -1,4 +1,14 @@
+import type { Metadata } from "next";
 import Paragraph from "../components/paragraph";
+
+export const metadata: Metadata = {
+  title: "Application Development Consulting",
+  description:
+    "Application development consulting for React and TypeScript products, from legacy modernization to scalable frontend architecture.",
+  alternates: {
+    canonical: "/appdev",
+  },
+};
 
 export default function Page() {
   return (
@@ -20,19 +30,19 @@ export default function Page() {
               I work primarily in React and TypeScript. I&apos;ve built large
               frontends, rewritten legacy applications, and created standalone
               systems that connect cleanly to backend services. I pay attention to
-              state management, API boundaries, and how components are organied so
+              state management, API boundaries, and how components are organized so
               that the application can grow without becoming difficult to maintain.
             </p>
             <p className="text-base sm:text-lg">
-              I&apos;ve also built internal tools and dashboard that interact with
+              I&apos;ve also built internal tools and dashboards that interact with
               infrastructure systems, databases, and cloud services. These types of
               applications usually involve data-heavy interfaces, operational
-              workflows, andn real constraint around performance and deployment.
+              workflows, and real constraints around performance and deployment.
             </p>
             <p className="text-base sm:text-lg">
               Outside of the browser, I&apos;ve written backend utilities and services
               in Go and Node. I&apos;ve built small servers, CLI tools, and automation scripts.
-              Earlier in my career I worked in system administration, which means I&apos;me used 
+              Earlier in my career I worked in system administration, which means I&apos;m used
               to thinking about how software behaves in production, during deployment, failure handling,
               and long-term maintenance.
             </p>

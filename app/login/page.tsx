@@ -1,4 +1,13 @@
+import type { Metadata } from "next";
 import { loginAction } from "./actions";
+
+export const metadata: Metadata = {
+  title: "Login",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default async function LoginPage({
   searchParams,

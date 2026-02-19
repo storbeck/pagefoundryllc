@@ -1,4 +1,14 @@
+import type { Metadata } from "next";
 import Paragraph from "../components/paragraph";
+
+export const metadata: Metadata = {
+  title: "AI Readiness and Integration Consulting",
+  description:
+    "Practical AI consulting for product teams, including RAG pipelines, model integrations, and workflow automation tied to real business needs.",
+  alternates: {
+    canonical: "/ai",
+  },
+};
 
 export default function Page() {
   return (
@@ -28,7 +38,7 @@ export default function Page() {
             </p>
             <p className="text-base sm:text-lg">
               I start with the actual need. If AI makes the system better, we
-              implement it. If it doesn&apos;, we don&apos;t. The goal is usefulness, not
+              implement it. If it doesn&apos;t, we don&apos;t. The goal is usefulness, not
               surface-level features.
             </p>
           </div>

@@ -7,6 +7,19 @@ import Footer from "./components/footer";
 import Script from "next/script";
 import { getCurrentUser } from "@/lib/auth";
 
+const FALLBACK_SITE_URL = "https://pagefoundry.dev";
+
+function getSiteUrl() {
+  const raw = process.env.NEXT_PUBLIC_SITE_URL || FALLBACK_SITE_URL;
+  try {
+    return new URL(raw);
+  } catch {
+    return new URL(FALLBACK_SITE_URL);
+  }
+}
+
+const siteUrl = getSiteUrl();
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -18,9 +31,36 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "PageFoundry LLC",
+  metadataBase: siteUrl,
+  title: {
+    default: "PageFoundry LLC | Product and Frontend Engineering",
+    template: "%s | PageFoundry LLC",
+  },
   description:
     "UI/UX frontend engineering for product teams. I build usable, production-ready interfaces and run focused UX audits to fix confusing flows.",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    url: "/",
+    title: "PageFoundry LLC | Product and Frontend Engineering",
+    description:
+      "UI/UX frontend engineering for product teams. I build usable, production-ready interfaces and run focused UX audits to fix confusing flows.",
+    siteName: "PageFoundry LLC",
+    images: [
+      {
+        url: "/logo.png",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "PageFoundry LLC | Product and Frontend Engineering",
+    description:
+      "UI/UX frontend engineering for product teams. I build usable, production-ready interfaces and run focused UX audits to fix confusing flows.",
+    images: ["/logo.png"],
+  },
 };
 
 export const viewport: Viewport = {
@@ -66,6 +106,22 @@ export default async function RootLayout({
             <Footer />
           </main>
         </div>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "ProfessionalService",
+              name: "PageFoundry LLC",
+              url: siteUrl.toString(),
+              description:
+                "Product and frontend engineering services for SaaS teams.",
+              email: "geoff@pagefoundry.dev",
+              sameAs: ["https://www.linkedin.com/in/geoff-storbeck-81a25035/"],
+              areaServed: "US",
+            }),
+          }}
+        />
       </body>
     </html>
   );

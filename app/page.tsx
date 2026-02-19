@@ -1,4 +1,14 @@
+import type { Metadata } from "next";
 import Paragraph from "@/components/paragraph";
+
+export const metadata: Metadata = {
+  title: "Product and Frontend Engineering Services",
+  description:
+    "PageFoundry helps SaaS teams modernize frontend architecture, clarify UX, and ship production-ready interfaces faster.",
+  alternates: {
+    canonical: "/",
+  },
+};
 
 export default function Home() {
   return (
