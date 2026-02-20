@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Fraunces, Manrope, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header";
 import Navigation from "./components/navigation";
@@ -21,8 +21,13 @@ function getSiteUrl() {
 
 const siteUrl = getSiteUrl();
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const bodyFont = Manrope({
+  variable: "--font-body",
+  subsets: ["latin"],
+});
+
+const displayFont = Fraunces({
+  variable: "--font-display",
   subsets: ["latin"],
 });
 
@@ -93,7 +98,7 @@ export default async function RootLayout({
         `}
       </Script>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${bodyFont.variable} ${displayFont.variable} ${geistMono.variable} antialiased`}
       >
         <div className="brand-shell min-h-screen font-sans">
           <KineticBackground />
