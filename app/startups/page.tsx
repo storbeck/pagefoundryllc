@@ -104,8 +104,7 @@ export default function Page() {
             <div className="flex flex-col gap-2">
               <h3 className="text-base font-semibold">forgot.ly (Chrome Extension)</h3>
               <p>
-                Natural-language search for your Chrome history using your own
-                <code>OPENAI_API_KEY</code>.
+                Natural-language search for your Chrome history using AI.
               </p>
               <p>
                 Uses local pre-ranking to shortlist likely entries, then sends
