@@ -7,11 +7,12 @@ export default function Header() {
       <div className="min-w-0 flex-1">
         <Link href="/" className="flex items-center gap-2 sm:gap-3">
           <Image
-            className="block h-12 w-12 shrink-0 dark:invert sm:h-auto sm:w-auto"
+            className="block h-12 w-12 shrink-0 sm:h-14 sm:w-14 md:h-16 md:w-16"
             src="/logo.png"
             alt="PageFoundry LLC"
             width={100}
             height={100}
+            unoptimized
             priority
           />
           <h1 className="truncate text-xl font-semibold leading-none sm:text-2xl md:text-4xl">

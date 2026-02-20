@@ -18,8 +18,12 @@ export default function Home() {
           Product & Frontend Engineering
         </h1>
         <p className="text-base sm:text-lg">
-          I help SaaS teams modernize messy frontends and clarify UX so
-          customers actually understand the product.
+          From Ormond Beach, Florida, I help SaaS and enterprise teams modernize
+          brittle legacy frontends, clarify complex product workflows, and build
+          delivery systems that scale with the business. My work spans
+          architecture, UX, and execution, with a focus on reducing technical
+          debt and turning slow monthly release cycles into fast, reliable
+          shipping.
         </p>
       </div>
       <div className="flex flex-col gap-2">
