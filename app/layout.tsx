@@ -6,7 +6,6 @@ import Navigation from "./components/navigation";
 import Footer from "./components/footer";
 import Script from "next/script";
 import { getCurrentUser } from "@/lib/auth";
-import BeachWebgl from "@/components/beach-webgl";
 
 const FALLBACK_SITE_URL = "https://pagefoundry.dev";
 
@@ -95,10 +94,9 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="beach-shell min-h-screen font-sans">
-          <BeachWebgl />
+        <div className="min-h-screen bg-zinc-50 font-sans dark:bg-black">
           <main
-            className={`beach-card mx-auto flex min-h-screen w-full max-w-5xl flex-col p-4 sm:px-6 md:px-12`}
+            className={`flex min-h-screen mx-auto w-full max-w-5xl flex-col bg-white p-4 sm:px-6 md:px-12 dark:bg-black`}
           >
             <Header />
             <Navigation />
