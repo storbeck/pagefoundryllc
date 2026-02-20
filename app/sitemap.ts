@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { writingConfigs } from "@/lib/writing";
 
 const FALLBACK_SITE_URL = "https://pagefoundry.dev";
 
@@ -14,9 +15,11 @@ function getSiteUrl() {
 export default function sitemap(): MetadataRoute.Sitemap {
   const siteUrl = getSiteUrl().toString().replace(/\/$/, "");
   const lastModified = new Date();
-  const publicRoutes = ["/", "/appdev", "/ux", "/ai", "/startups"];
+  const publicRoutes = ["/", "/appdev", "/ux", "/ai", "/projects", "/writing"];
+  const insightRoutes = writingConfigs.map((post) => `/writing/${post.slug}`);
+  const allRoutes = [...publicRoutes, ...insightRoutes];
 
-  return publicRoutes.map((route) => ({
+  return allRoutes.map((route) => ({
     url: `${siteUrl}${route}`,
     lastModified,
     changeFrequency: "monthly",

@@ -11,7 +11,8 @@ export default async function Navigation() {
       <Link href="/appdev">Development</Link>
       <Link href="/ux">UX Consulting</Link>
       <Link href="/ai">AI Readiness</Link>
-      <Link href="/startups">Micro Startups</Link>
+      <Link href="/projects">Projects</Link>
+      <Link href="/writing">Writing</Link>
       <div className="flex-1" />
       {user ? (
         <Link href="/logout">Logout</Link>

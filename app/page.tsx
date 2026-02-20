@@ -171,6 +171,7 @@ export default function Home() {
           <li>Founders who need senior-level execution, not just strategy.</li>
         </ul>
       </section>
+
     </div>
   );
 }
