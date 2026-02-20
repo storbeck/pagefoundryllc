@@ -87,6 +87,46 @@ export default function Page() {
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
           <article className="flex flex-col gap-3 border border-black/10 bg-black/[0.02] p-3 text-sm md:col-span-2 md:flex-row md:items-start">
             <a
+              href="/forgotly.png"
+              target="_blank"
+              rel="noreferrer"
+              title="Open full-size image"
+              className="block md:h-[180px] md:w-[320px] md:shrink-0"
+            >
+              <Image
+                src="/forgotly.png"
+                alt="forgot.ly Chrome extension search UI"
+                width={420}
+                height={240}
+                className="h-auto w-full border border-black/10 bg-black/[0.03] md:h-[180px] md:w-[320px] md:object-cover md:object-top"
+              />
+            </a>
+            <div className="flex flex-col gap-2">
+              <h3 className="text-base font-semibold">forgot.ly (Chrome Extension)</h3>
+              <p>
+                Natural-language search for your Chrome history using your own
+                <code>OPENAI_API_KEY</code>.
+              </p>
+              <p>
+                Uses local pre-ranking to shortlist likely entries, then sends
+                only those candidates to OpenAI for semantic reranking and
+                returns likely matches with reasons.
+              </p>
+              <p className="font-semibold">
+                GitHub:{" "}
+                <a
+                  href="https://github.com/storbeck/forgot.ly"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  github.com/storbeck/forgot.ly
+                </a>
+              </p>
+            </div>
+          </article>
+
+          <article className="flex flex-col gap-3 border border-black/10 bg-black/[0.02] p-3 text-sm md:col-span-2 md:flex-row md:items-start">
+            <a
               href="/quickcap.png"
               target="_blank"
               rel="noreferrer"
