@@ -7,8 +7,7 @@ import Footer from "./components/footer";
 import Script from "next/script";
 import { getCurrentUser } from "@/lib/auth";
 import KineticBackground from "@/components/kinetic-background";
-import mixpanel from "mixpanel-browser"
-import { useEffect } from "react";
+import MixpanelProvider from "@/components/mixpanel-provider";
 
 const FALLBACK_SITE_URL = "https://pagefoundry.dev";
 
@@ -85,14 +84,6 @@ export default async function RootLayout({
   const user = await getCurrentUser();
   const isLoggedIn = !!user;
 
-  useEffect(() => {
-    // Create an instance of the Mixpanel object, your token is already added to this snippet
-    mixpanel.init('4ba463d581f794dcf1a6da2690508d33', {
-      autocapture: true,
-      record_sessions_percent: 100,
-    })
-  }, [])
-
   return (
     <html lang="en">
       <Script
@@ -110,6 +101,7 @@ export default async function RootLayout({
       <body
         className={`${bodyFont.variable} ${displayFont.variable} ${geistMono.variable} antialiased`}
       >
+        <MixpanelProvider />
         <div className="brand-shell min-h-screen font-sans">
           <KineticBackground />
           <main
