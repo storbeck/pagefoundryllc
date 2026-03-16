@@ -66,10 +66,12 @@ export default async function WorkLogPage({
     ]),
   );
 
-  const latestEntryDate = entries[0]?.workDate ? utcDay(entries[0].workDate) : null;
-  if (latestEntryDate) {
+  const oldestEntryDate = entries[entries.length - 1]?.workDate
+    ? utcDay(entries[entries.length - 1].workDate)
+    : null;
+  if (oldestEntryDate) {
     for (
-      let cursor = addDays(latestEntryDate, 1);
+      let cursor = oldestEntryDate;
       cursor.getTime() <= today.getTime();
       cursor = addDays(cursor, 1)
     ) {
